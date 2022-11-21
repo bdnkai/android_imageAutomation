@@ -1,1 +1,1 @@
-# pylon
+# PyLon - script automation for an Android MMORPG application
