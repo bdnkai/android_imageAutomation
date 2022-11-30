@@ -1,43 +1,21 @@
-import cv2 as cv
+import cv2 as cv, cv2
+import numpy as np
+import os
+from windowcapture import WindowCapture
 from threading import Thread, Lock
 
 
-class Detection:
+class Image_Detector:
+    def __init__(self):
+        path = os.path.dirname(os.path.dirname(__file__))
+        img_path = os.path.join(path, 'img')
 
-    # threading properties
-    stopped = True
-    lock = None
-    rectangles = []
-    # properties
-    cascade = None
-    screenshot = None
+        gamenotice_img = cv2.imread(os.path.join(self.img_path, 'gamenotice.png'), cv2.IMREAD_UNCHANGED)
+        result_try = cv2.matchTemplate(img, gamenotice_img, cv2.TM_CCOEFF_NORMED)
+        _, max_val, _, max_loc = cv2.minMaxLoc(result_try)
+        if max_val > .9:
+            print("Found it!!")
+            gamenotice_img.get_screen_position()
+            print(f'{gamenotice_img.get_screen_position()}')
 
-    def __init__(self, model_file_path):
-        # create a thread lock object
-        self.lock = Lock()
-        # load the trained model
-        self.cascade = cv.CascadeClassifier(model_file_path)
-
-    def update(self, screenshot):
-        self.lock.acquire()
-        self.screenshot = screenshot
-        self.lock.release()
-
-    def start(self):
-        self.stopped = False
-        t = Thread(target=self.run)
-        t.start()
-
-    def stop(self):
-        self.stopped = True
-
-    def run(self):
-        # TODO: you can write your own time/iterations calculation to determine how fast this is
-        while not self.stopped:
-            if not self.screenshot is None:
-                # do object detection
-                rectangles = self.cascade.detectMultiScale(self.screenshot)
-                # lock the thread while updating the results
-                self.lock.acquire()
-                self.rectangles = rectangles
-                self.lock.release()
+        

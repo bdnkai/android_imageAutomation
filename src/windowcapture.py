@@ -39,7 +39,7 @@ class WindowCapture:
         self.offset_x = window_rect[0] + self.cropped_x
         self.offset_y = window_rect[1] + self.cropped_y
 
-        print(f'{self.h, self.w, window_rect}')
+        print(f'H:{self.h} W:{self.w}')
     def get_screenshot(self):
         
         # get the window image data

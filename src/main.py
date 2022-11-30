@@ -4,10 +4,13 @@ import os
 from time import time
 from windowcapture import WindowCapture
 from autopylon import ADB_Connect
+from detection import Image_Detector
 
 # Change the working directory to the folder this script is in.
 # Doing this because I'll be putting the files from each video in their own folder on GitHub
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
+path = os.path.dirname(os.path.abspath(__file__))
+img_path = os.path.join(path, 'img')
+
 
 
 # initialize the WindowCapture class
