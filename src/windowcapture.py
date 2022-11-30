@@ -5,8 +5,8 @@ import win32gui, win32ui, win32con
 class WindowCapture:
 
     # properties
-    w = 0
-    h = 0
+    w = 1280
+    h = 720
     hwnd = None
     cropped_x = 0
     cropped_y = 0
@@ -22,13 +22,14 @@ class WindowCapture:
 
         # get the window size
         window_rect = win32gui.GetWindowRect(self.hwnd)
+
         self.w = window_rect[2] - window_rect[0]
         self.h = window_rect[3] - window_rect[1]
 
         # account for the window border and titlebar and cut them off
-        border_pixels = 14
+        border_pixels = 0
         titlebar_pixels = 52
-        self.w = self.w - (border_pixels * 2)
+        # self.w = self.w - (border_pixels * 2)
         self.h = self.h - titlebar_pixels - border_pixels
         self.cropped_x = border_pixels
         self.cropped_y = titlebar_pixels
@@ -38,8 +39,7 @@ class WindowCapture:
         self.offset_x = window_rect[0] + self.cropped_x
         self.offset_y = window_rect[1] + self.cropped_y
 
-        print(f'{self.h, self.w}')
-
+        print(f'{self.h, self.w, window_rect}')
     def get_screenshot(self):
         
         # get the window image data
@@ -87,7 +87,6 @@ class WindowCapture:
         win32gui.EnumWindows(winEnumHandler, None)
 
     # translate a pixel position on a screenshot image to a pixel position on the screen.
-    # pos = (x, y)
     # WARNING: if you move the window being captured after execution is started, this will
     # return incorrect coordinates, because the window position is only calculated in
     # the __init__ constructor.
