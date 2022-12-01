@@ -8,8 +8,7 @@ from detection import Image_Detector
 
 # Change the working directory to the folder this script is in.
 # Doing this because I'll be putting the files from each video in their own folder on GitHub
-path = os.path.dirname(os.path.abspath(__file__))
-img_path = os.path.join(path, 'img')
+os.path.dirname(os.path.abspath(__file__))
 
 
 
