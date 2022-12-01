@@ -13,9 +13,10 @@ class ADB_Connect:
   adb = AdbClient(host='127.0.0.1', port=5037)
   devices = adb.devices()
 
-  for i in devices:
-    device = i
-    device.shell(f'reboot')
+  device = devices[0]
+  # for i in devices:
+    # device = i
+  # device.shell(f'input tap 475 180')
  
 
   if len(devices) == 0:
