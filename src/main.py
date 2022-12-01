@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import os
 from time import time
-from windowcapture import WindowCapture
+# from windowcapture import WindowCapture
 # from autopylon import ADB_Connect
 # from detection import Image_Detector
 
@@ -16,17 +16,13 @@ gntitlebar_img = cv.imread('./img/gntitlebar.png', cv.IMREAD_UNCHANGED)
 result = cv.matchTemplate(gntitlebar_img, gnmenu_img, cv.TM_CCOEFF_NORMED)
 print(result)
 
-threshold = .8
+threshold = 1
 locations = np.where(result >= threshold)
 locations = list(zip(*locations[::-1]))
 print(locations)
 
-
-wincap = WindowCapture("badbar0")
-screenshot = wincap.get_screenshot()
-
 if locations:
-    print('found a match')
+    # print('found a match')
     gntitlebar_w = gntitlebar_img.shape[1]
     gntitlebar_h = gntitlebar_img.shape[0]
     line_color = (0,255,0)
@@ -35,37 +31,36 @@ if locations:
     for loc in locations:
         top_left = loc
         bottom_right = (top_left[0] + gntitlebar_w, top_left[1] + gntitlebar_h)
-        cv.rectangle(gntitlebar_img, top_left, bottom_right, line_color, line_type)
-
-        cv.imshow('matches', screenshot)
-        cv.waitKey()
         
+        cv.rectangle(gnmenu_img, top_left, bottom_right, line_color, line_type)
+
+    cv.imshow('matches', gnmenu_img)
+
 else:
-    print('match not found')
+        print('match not found')
 
 
 # emulator = "badbar0", "badbar1", "badbar2", "badbar3"
 
 # for i in emulator:
-#     wincap = WindowCapture(i)
+    # wincap = WindowCapture(i)
 
 
 
-# while(True):
+while(True):
     
-#     # get an updated image of the game
-#     for i in emulator:
-#         screenshot = wincap.get_screenshot()
-#         cv.imshow(f'{i}', screenshot)
-
-    
-#     if cv.waitKey(1) == ord('q'):
-#         cv.destroyAllWindows()
-#         break
+    # get an updated image of the game
+    # for i in emulator:
+    #     screenshot = wincap.get_screenshot()
+    #     cv.imshow(f'{i}', screenshot)
 
 
 
+    if cv.waitKey(1) == ord('q'):
+        cv.destroyAllWindows()
+        break
 
 
+cv.waitKey()
 
 print('Done.')
