@@ -1,2 +1,4 @@
-.vscode
-./src/img/
+# misc
+__pycache__
+/src/img/*
+.vscode/*
