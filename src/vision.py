@@ -7,7 +7,7 @@ class Vision:
     def __init__(self, img_path, method=cv.TM_CCOEFF_NORMED):
         self._img = cv.imread(img_path, cv.IMREAD_UNCHANGED)
 
-        self._w = _img.shape[1]g
+        self._w = _img.shape[1]
         self._h = _img.shape[0]
 
         self.method = method
