@@ -14,27 +14,50 @@ class ADB_Connect:
   adb = AdbClient(host='127.0.0.1', port=5037)
   devices = adb.devices()
 
-  
+  device_names = ['badbar0', 'badbar1', 'badbar2', 'badbar3']
+
+  device = devices
+
+    # how to make this continuous
+  for name in device_names:
+    name = name
+    print(name)
+    wincap = WindowCapture(name)
+    
+    for device in devices:
+      device = device
+      screenshot = wincap.get_screenshot()
+      print(device)
+      cv2.imshow(name, screenshot)
+      
+    
 
 
-  device_name = ['badbar0', 'badbar1', 'badbar2', 'badbar3']
 
 
 
-  for device in devices:
-    device = device
 
-  for i in device_name:
-    wincap = [WindowCapture(i)]
+
+
+  # for device in devices:
+    
+
+
+    # wincap = WindowCapture(device)
+    
    
 
   while(True):
 
-    for win in wincap:
-       screenshot = win.get_screenshot()
-     
-    for i in device_name:
-        cv2.imshow(i, screenshot)
+    # screenshot = wincap.get_screenshot()
+    for i in device_names:
+      device_name = i
+      wincap = WindowCapture(device_name)
+      screenshot = wincap.get_screenshot()
+
+    cv2.imshow(device_name, screenshot)
+
+
     
     
 
