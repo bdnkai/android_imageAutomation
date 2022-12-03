@@ -1,66 +1,66 @@
-import cv2 as cv
-import numpy as np
+# import cv2 as cv
+# import numpy as np
 
 
-class Vision:
+# class Vision:
 
-    def __init__(self, img_path, method=cv.TM_CCOEFF_NORMED):
-        self._img = cv.imread(img_path, cv.IMREAD_UNCHANGED)
+#     def __init__(self, img_path, method=cv.TM_CCOEFF_NORMED):
+#         self.img = cv.imread(img_path, cv.IMREAD_UNCHANGED)
 
-        self._w = _img.shape[1]
-        self._h = _img.shape[0]
+#         self.img_w = self.img.shape[1]
+#         self.img_h = self.img.shape[0]
 
-        self.method = method
+#         self.method = method
 
-    def find(self, _img, threshold=0.8, debug=None):
-        result = cv.matchTemplate(_img, self._img, cv.TM_CCOEFF_NORMED)
-        print(result)
+#     def find(self, img, threshold=0.8, debug=None):
+#         result = cv.matchTemplate(img, self.img, cv.TM_CCOEFF_NORMED)
+#         print(result)
 
-        locations = np.where(result >= threshold)
-        locations = list(zip(*locations[::-1]))
-        print(locations)
-
-
-        rectangles = []
-        for loc in locations:
-            rect = [int(loc[0]), int(loc[1]), self._w, self._h]
-            rectangles.append(rect)
-            print(rectangles)
+#         locations = np.where(result >= threshold)
+#         locations = list(zip(*locations[::-1]))
+#         print(locations)
 
 
-    def get_input_positions(self, rectangles):
-        points = []
+#         rectangles = []
+#         for loc in locations:
+#             rect = [int(loc[0]), int(loc[1]), self._w, self._h]
+#             rectangles.append(rect)
+#             print(rectangles)
 
-        for (x, y, w, h) in rectangles:
-            center_x = x + int(w/2)
-            center_y = y + int(h/2)
-            points.append((center_x, center_y))
 
-        return points
+#     def get_input_positions(self, rectangles):
+#         points = []
 
-    def draw_rectangles(self, _img, rectangles):
-        line_color = (0, 255, 0)
-        line_type = cv.LINE_4
+#         for (x, y, w, h) in rectangles:
+#             center_x = x + int(w/2)
+#             center_y = y + int(h/2)
+#             points.append((center_x, center_y))
 
-        for (x, y, w, h) in rectangles:
-            top_left = (x, y)
-            bottom_right = (x + w, y + h)
-            cv.rectangle(_img, top_left, bottom_right, line_color, lineType=line_type)
+#         return points
 
-        return _img
+#     def draw_rectangles(self, img, rectangles):
+#         line_color = (0, 255, 0)
+#         line_type = cv.LINE_4
 
-    def draw_crosshairs(self, _img, points):
-        marker_color = (255, 0, 255)
-        marker_type = cv.MARKER_CROSS
+#         for (x, y, w, h) in rectangles:
+#             top_left = (x, y)
+#             bottom_right = (x + w, y + h)
+#             cv.rectangle(img, top_left, bottom_right, line_color, lineType=line_type)
 
-        for (center_x, center_y) in points:
-            cv.drawMarker(_img, (center_x, center_y), marker_color, marker_type)
+#         return img
 
-        return _img
+#     def draw_crosshairs(self, img, points):
+#         marker_color = (255, 0, 255)
+#         marker_type = cv.MARKER_CROSS
 
-    def centeroid(self, point_list):
-        point_list = np.asarray(point_list, dtype=np.int32)
-        length = point_list.shape[0]
-        sum_x = np.sum(point_list[:, 0])
-        sum_y = np.sum(point_list[:, 1])
-        return [np.floor_divide(sum_x, length), np.floor_divide(sum_y, length)]
+#         for (center_x, center_y) in points:
+#             cv.drawMarker(img, (center_x, center_y), marker_color, marker_type)
+
+#         return img
+
+#     def centeroid(self, point_list):
+#         point_list = np.asarray(point_list, dtype=np.int32)
+#         length = point_list.shape[0]
+#         sum_x = np.sum(point_list[:, 0])
+#         sum_y = np.sum(point_list[:, 1])
+#         return [np.floor_divide(sum_x, length), np.floor_divide(sum_y, length)]
