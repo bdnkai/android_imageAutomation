@@ -11,17 +11,18 @@ from windowcapture import WindowCapture
 
 class ADB_Connect:
 
-  adb = AdbClient(host='127.0.0.1', port=5037)
-  devices = adb.devices()
+  def __init__(self):
+    adb = AdbClient(host='127.0.0.1', port=5037)
+    devices = adb.devices()
 
   
-  device = devices[0]
-  print(device)
-  # device.shell(f'input tap 475 180')
+    device = devices[0]
+    print(device)
+    device.shell(f'input tap 475 180')
 
-  if len(devices) == 0:
-      print('no device attached')
-      quit()
+    if len(devices) == 0:
+        print('no device attached')
+        quit()
 
 
 
