@@ -13,7 +13,7 @@ wincap = WindowCapture("badbar0")
 screenshot = wincap.get_screenshot()
 gnmenu_img = cv.imread('./img/gnmenu.png', cv.IMREAD_UNCHANGED)
 gntitlebar_img = cv.imread('./img/gntitlebar.png', cv.IMREAD_UNCHANGED)
-test
+
 
 result = cv.matchTemplate(gntitlebar_img, screenshot, cv.TM_CCOEFF_NORMED)
 print(result)
