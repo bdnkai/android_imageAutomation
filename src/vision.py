@@ -80,11 +80,11 @@ class Vision:
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
-                                markerSize=40, thickness=2)
+                                markerSize=20, thickness=2)
 
         if debug_mode:
             cv.imshow('Matches', haystack_img)
             #cv.waitKey()
-            #cv.imwrite('result_click_point.jpg', haystack_img)
+            # cv.imwrite('result_click_point.jpg', haystack_img)
 
         return points

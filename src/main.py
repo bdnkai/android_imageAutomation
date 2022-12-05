@@ -41,18 +41,25 @@ os.path.abspath(__file__)
 # else:
 #   print('match not found')
 
-
+test = ADB_Connect()
+print(test)
 
 wincap = WindowCapture("badbar0")
-vision_gntitlebar = Vision('x:\\Personal_Project\\bdn_portfolio\\pylon\\src\\img\\gntitlebar.png')
+vision_gntitlebar = Vision('x:\\Personal_Project\\bdn_portfolio\\pylon\\src\\img\\x.png')
 
 while(True):
 
     screenshot = wincap.get_screenshot()
 
-    points = vision_gntitlebar.find(screenshot, 0.6, 'rectangles')
+    points = vision_gntitlebar.find(screenshot, 0.6, 'points')
 
-    cv.imshow('matches', screenshot)
+
+    if points:
+        print(f'{points[0]}')
+        break
+    # print(points)
+
+    # cv.imshow('matches', screenshot)
 
 
 

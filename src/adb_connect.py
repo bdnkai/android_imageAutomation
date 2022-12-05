@@ -18,14 +18,12 @@ class ADB_Connect:
   
     device = devices[0]
     print(device)
-    device.shell(f'input tap 475 180')
+
+    device.shell(f'input tap 318 31')
 
     if len(devices) == 0:
         print('no device attached')
         quit()
-
-
-
 
   # for i in devices:
   #   device = i
