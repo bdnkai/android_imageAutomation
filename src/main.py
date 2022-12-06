@@ -5,7 +5,7 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assigndevice import AssignDevice
+from assigndevice import AssignDevice as aD
 
 
 os.path.abspath(__file__)
@@ -43,24 +43,19 @@ os.path.abspath(__file__)
 
 
 # wincap = WindowCapture("badbar0")
-namesArray = ['badbar0']
-# namesArray = ["badbar0","badbar1","badbar2","badbar3"]
+# namesArray = ['badbar0']
+namesArray = ["badbar0","badbar1","badbar2","badbar3"]
 
-for device in AssignDevice.devices:
-    for name in namesArray:
-        AssignDevice(name)
+vision_gntitlebar = Vision('src\\img\\icon.png')
 
-vision_gntitlebar = Vision('src\\img\\x.png')
+for device in range(len(aD.devices)):
+   deviceShow = aD(namesArray[device],vision_image=vision_gntitlebar)
+
+
 
 while(True):
 
 
-    points = vision_gntitlebar.find(screenshot, 0.7, 'points')
-
-
-    if points:
-        print(f'{points[0]}')
-        break
     # print(points)
 
     # cv.imshow('matches', screenshot)
