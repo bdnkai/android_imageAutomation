@@ -5,7 +5,7 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from adb_connect import ADB_Connect
+from assigndevice import AssignDevice
 
 
 os.path.abspath(__file__)
@@ -41,17 +41,21 @@ os.path.abspath(__file__)
 # else:
 #   print('match not found')
 
-test = ADB_Connect()
-print(test)
 
-wincap = WindowCapture("badbar0")
-vision_gntitlebar = Vision('x:\\Personal_Project\\bdn_portfolio\\pylon\\src\\img\\x.png')
+# wincap = WindowCapture("badbar0")
+namesArray = ['badbar0']
+# namesArray = ["badbar0","badbar1","badbar2","badbar3"]
+
+for device in AssignDevice.devices:
+    for name in namesArray:
+        AssignDevice(name)
+
+vision_gntitlebar = Vision('src\\img\\x.png')
 
 while(True):
 
-    screenshot = wincap.get_screenshot()
 
-    points = vision_gntitlebar.find(screenshot, 0.6, 'points')
+    points = vision_gntitlebar.find(screenshot, 0.7, 'points')
 
 
     if points:
