@@ -13,7 +13,7 @@ class Vision:
     method = None
 
     # constructor
-    def __init__(self, needle_img_path, needle_name, method=cv.TM_CCOEFF_NORMED):
+    def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
         self.needle_img = cv.imread(needle_img_path)
@@ -25,7 +25,7 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, haystack_img, needle_name, threshold=0.5, debug_mode=None):
+    def find(self, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
         self.needle_img = np.array(self.needle_img)
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)

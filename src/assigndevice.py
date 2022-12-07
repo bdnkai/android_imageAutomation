@@ -17,7 +17,8 @@ class AssignDevice:
     device_w = 0
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
-    screenshot = [...]
+    screenshot = []
+    vision_image = []
 
 #   constructor
     def __init__(self, device_name, vision_image):
@@ -28,15 +29,20 @@ class AssignDevice:
                     self.device_name = device_name
                     self.device_name = self.device_name
                     wincap = WindowCapture(device_name)
-                    self.screenshot = wincap.get_screenshot()
-                    self.points = vision_image.find(self.screenshot, device_name, 0.7, 'points')
+                    self.screenshot.append(wincap.get_screenshot())
+                    self.vision_image.append(vision_image)
 
 
-            if self.points:
-                    print(f'{self.points[0]}')
-                
-            #     get window size then convert img to window size
-            #     convert image size before calling vision function
+    def adb_recognition(self=vision_image):
+        self.find = vision_image.find(self.screenshot, self.device_name, 0.7, 'points')
+
+
+        if find:
+            print(f'{self.find}')
+            cv.imshow(f'{self.device_name}', self.screenshot)
+
+                    #     get window size then convert img to window size
+                    #     convert image size before calling vision function
 
 
 
