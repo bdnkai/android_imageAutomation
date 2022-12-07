@@ -5,7 +5,7 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assigndevice import AssignDevice as aD
+from assigndevice import AssignDevice as aDevice
 
 
 os.path.abspath(__file__)
@@ -46,19 +46,21 @@ os.path.abspath(__file__)
 # namesArray = ['badbar0']
 namesArray = ["badbar0","badbar1","badbar2","badbar3"]
 
-vision_gntitlebar = Vision('src\\img\\icon.png')
 
-for device in range(len(aD.devices)):
-   deviceShow = aD(namesArray[device],vision_image=vision_gntitlebar)
+currentDevice = []
+def android_device():
+    for device in range(len(aDevice.devices)):
+        vision_gntitlebar = Vision('src\\img\\icon.png',None)
+        device = aDevice(namesArray[device],vision_gntitlebar)
+        currentDevice.append(device)
+        print(currentDevice)
+
+        return currentDevice
+
 
 
 
 while(True):
-
-
-    # print(points)
-
-    # cv.imshow('matches', screenshot)
 
 
 
@@ -68,6 +70,6 @@ while(True):
     if cv.waitKey(1) == ord('q'):
         cv.destroyAllWindows()
         break
-        
+
 cv.waitKey()
 print('Done.')
