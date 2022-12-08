@@ -27,8 +27,10 @@ class Vision:
 
     def find(self, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
-        self.needle_img = np.array(self.needle_img)
+
+        self.needle_img = np.array(self.needle_img, dtype="uint8")
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
+
 
         # Get the all the positions from the match result that exceed our threshold
         locations = np.where(result >= threshold)
@@ -54,7 +56,7 @@ class Vision:
 
         points = []
         if len(rectangles):
-            #print('Found needle.')
+            print('Found needle.')
 
             line_color = (0, 255, 0)
             line_type = cv.LINE_4
@@ -84,6 +86,6 @@ class Vision:
                                 markerSize=20, thickness=2)
 
         if debug_mode:
-            cv.imshow(f'{needle_name}', haystack_img)
+            cv.imshow('test', haystack_img)
 
         return points

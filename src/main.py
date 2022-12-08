@@ -45,7 +45,7 @@ os.path.abspath(__file__)
 # wincap = WindowCapture("badbar0")
 # namesArray = ['badbar0']
 namesArray = ["badbar0","badbar1","badbar2","badbar3"]
-vision_gntitlebar = Vision('src\\img\\icon.png')
+vision_gntitlebar = Vision('src//img//neverland.png')
 
 currentDevice = []
 def android_device(vision_image):
@@ -58,22 +58,23 @@ def android_device(vision_image):
         return namesArray[device]
 
 
-def adb_recognition(fetch_vision):
-        if AssignDevice.screenshot:
-            fetch_vision = vision_image.find(AssignDevice.screenshot, AssignDevice.device_name, 0.7, 'points')
-            return self.fetch_vision
+# def adb_recognition(fetch_vision):
+#         if AssignDevice.screenshot:
+#             fetch_vision = vision_image.find(AssignDevice.screenshot, AssignDevice.device_name, 0.7, 'points')
+#             return self.fetch_vision
 
 
 while(True):
 
     if len(currentDevice) <= 0:
-        adb_screenshot =android_device(vision_gntitlebar)
-        aDevice.adb_recognition(adb_screenshot)
+        adb_screenshot = android_device(vision_gntitlebar)
+
         print(adb_screenshot)
 
     else:
+
         print('ill wait')
-        break
+
     # if :
         # print(currentDevice)
         # aDevice.adb_recognition(android_device(vision_gntitlebar))

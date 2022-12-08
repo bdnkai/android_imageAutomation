@@ -30,11 +30,11 @@ class AssignDevice:
                     self.device_name = self.device_name
                     wincap = WindowCapture(device_name)
                     self.screenshot = wincap.get_screenshot()
-                    print('screenshot as been mutated to:' f'{self.screenshot}')
+                    print('screenshot has been mutated to: ' f'{self.screenshot}')
 
-                    self.vision_image = vision_image
-                    print('vision image as been mutated to:' f'{self.vision_image}')
-
+                    self.vision_image = self.vision_image
+                    print('vision image has been mutated to: ' f'{self.vision_image}')
+                    self.points = self.vision_image.find(AssignDevice.screenshot, AssignDevice.vision_image, 'points')
 
 
 
