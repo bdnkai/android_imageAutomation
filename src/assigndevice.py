@@ -4,7 +4,7 @@ import threading
 import cv2 as cv
 import numpy as np
 from PIL import Image
-import mss
+from vision import Vision
 from windowcapture import WindowCapture
 
 
@@ -18,7 +18,7 @@ class AssignDevice:
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
     screenshot = []
-    vision_image = []
+    vision_image = None
 
 #   constructor
     def __init__(self, device_name, vision_image):
@@ -29,17 +29,17 @@ class AssignDevice:
                     self.device_name = device_name
                     self.device_name = self.device_name
                     wincap = WindowCapture(device_name)
-                    self.screenshot.append(wincap.get_screenshot())
-                    self.vision_image.append(vision_image)
+                    self.screenshot = wincap.get_screenshot()
+                    print('screenshot as been mutated to:' f'{self.screenshot}')
+
+                    self.vision_image = vision_image
+                    print('vision image as been mutated to:' f'{self.vision_image}')
 
 
-    def adb_recognition(self=vision_image):
-        self.find = vision_image.find(self.screenshot, self.device_name, 0.7, 'points')
 
 
-        if find:
-            print(f'{self.find}')
-            cv.imshow(f'{self.device_name}', self.screenshot)
+        # if __init__:
+
 
                     #     get window size then convert img to window size
                     #     convert image size before calling vision function

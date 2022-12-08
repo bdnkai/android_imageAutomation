@@ -51,25 +51,36 @@ currentDevice = []
 def android_device(vision_image):
     for device in range(len(aDevice.devices)):
 
-        device = aDevice(namesArray[device],vision_image)
-        currentDevice.append(device)
+        device_name = aDevice(namesArray[device],vision_image)
+        currentDevice.append(device_name)
         print('current device has been pushed')
+        print(namesArray[device])
+        return namesArray[device]
 
-        return currentDevice
 
-
+def adb_recognition(fetch_vision):
+        if AssignDevice.screenshot:
+            fetch_vision = vision_image.find(AssignDevice.screenshot, AssignDevice.device_name, 0.7, 'points')
+            return self.fetch_vision
 
 
 while(True):
 
-    adb_screenshot = android_device(vision_gntitlebar)
-
-    if len(currentDevice) > 0:
-        print(currentDevice)
+    if len(currentDevice) <= 0:
+        adb_screenshot =android_device(vision_gntitlebar)
         aDevice.adb_recognition(adb_screenshot)
+        print(adb_screenshot)
 
     else:
-        print('nothing in current')
+        print('ill wait')
+        break
+    # if :
+        # print(currentDevice)
+        # aDevice.adb_recognition(android_device(vision_gntitlebar))
+
+
+    # else:
+    #     print('nothing in current')
 
 
 

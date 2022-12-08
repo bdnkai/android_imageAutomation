@@ -85,7 +85,5 @@ class Vision:
 
         if debug_mode:
             cv.imshow(f'{needle_name}', haystack_img)
-            #cv.waitKey()
-            # cv.imwrite('result_click_point.jpg', haystack_img)
 
         return points
