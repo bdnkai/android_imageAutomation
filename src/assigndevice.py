@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 from vision import Vision
 from windowcapture import WindowCapture
-
+d
 
 
 class AssignDevice:
