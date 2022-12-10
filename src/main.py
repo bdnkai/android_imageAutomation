@@ -5,7 +5,7 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assigndevice import AssignDevice as device
+from assigndevice import Device
 
 
 os.path.abspath(__file__)
@@ -18,10 +18,7 @@ icon_img = img_path("icon")
 print(icon_img)
 
 def android_device(vision_image):
-    print(vision_image)
-    img_recognition = device(vision_image)
-    print(img_recognition)
-    return img_recognition
+    Android()
 
 
 
