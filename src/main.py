@@ -45,7 +45,16 @@ os.path.abspath(__file__)
 # wincap = WindowCapture("badbar0")
 # namesArray = ['badbar0']
 namesArray = ["badbar0","badbar1","badbar2","badbar3"]
-vision_gntitlebar = Vision('src//img//neverland.png')
+
+def img_path(pic_name):
+    img = f'src//img//{pic_name}.png'
+    return img
+
+icon_img = img_path("icon")
+
+
+
+vision_gntitlebar = Vision(icon_img)
 
 currentDevice = []
 def android_device(vision_image):
@@ -53,9 +62,10 @@ def android_device(vision_image):
 
         device_name = aDevice(namesArray[device],vision_image)
         currentDevice.append(device_name)
-        print('current device has been pushed')
-        print(namesArray[device])
-        return namesArray[device]
+        println('current device has been pushed')
+        println(currentDevice)
+        # if statment for multiple device cvshow
+
 
 
 # def adb_recognition(fetch_vision):
@@ -68,20 +78,6 @@ while(True):
 
     if len(currentDevice) <= 0:
         adb_screenshot = android_device(vision_gntitlebar)
-
-        print(adb_screenshot)
-
-    else:
-
-        print('ill wait')
-
-    # if :
-        # print(currentDevice)
-        # aDevice.adb_recognition(android_device(vision_gntitlebar))
-
-
-    # else:
-    #     print('nothing in current')
 
 
 

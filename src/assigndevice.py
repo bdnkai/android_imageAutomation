@@ -6,7 +6,7 @@ import numpy as np
 from PIL import Image
 from vision import Vision
 from windowcapture import WindowCapture
-d
+
 
 
 class AssignDevice:
@@ -24,17 +24,30 @@ class AssignDevice:
     def __init__(self, device_name, vision_image):
             if len(self.devices) >= 1:
                 for device in self.devices:
-                    self.device = device
+                    self.device = _new_device
                     self.device_name = self.device
                     self.device_name = device_name
                     self.device_name = self.device_name
-                    wincap = WindowCapture(device_name)
-                    self.screenshot = wincap.get_screenshot()
-                    print('screenshot has been mutated to: ' f'{self.screenshot}')
+                    self.wincap = WindowCapture(device_name)
 
-                    self.vision_image = self.vision_image
-                    print('vision image has been mutated to: ' f'{self.vision_image}')
-                    self.points = self.vision_image.find(AssignDevice.screenshot, AssignDevice.vision_image, 'points')
+                while True:
+                    self.screenshot = self.wincap.get_screenshot()
+                    # print('screenshot has been mutated to: ' f'{self.screenshot}')
+                    # print('vision image has been mutated to: ' f'{self.vision_image}')
+                    points = vision_image.find(self.screenshot,0.8, 'points')
+                    print(len(AssignDevice.devices))
+                    quiit()
+                    cv.imshow(f'{device_name}', self.screenshot)
+
+                    if cv.waitKey(1) == ord('q'):
+                        cv.destroyAllWindows()
+                        quit()
+                        print('Done.')
+                        break
+
+
+
+
 
 
 

@@ -85,7 +85,7 @@ class Vision:
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
 
-        if debug_mode:
-            cv.imshow('test', haystack_img)
+        # if debug_mode:
+        #     cv.imshow('test', haystack_img)
 
         return points
