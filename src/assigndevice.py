@@ -14,50 +14,76 @@ class AssignDevice:
     devices = adb.devices()
 
 #   properties
-    namesArray = ["badbar0","badbar1","badbar2","badbar3"]
+    adb_names = ["badbar0","badbar1","badbar2","badbar3"]
     device = None
-    device_names = None
+    new_device_name = []
+    new_wincap = []
     device_h = 0
     device_w = 0
 
     screenshot = []
     vision_image = None
+    points = None
 
 
 
 #   constructor
-    def __init__(self, device_name, vision_image):
-        if len(self.devices) >= 1:
-            for i in range(devices):
-                print(f'Im seeing {len(devices)} devices, currently assigning device:{i}')
-                for device in self.devices:
-                    if i == len(self.devices):
-                        print(f'No more devices to assing')
-                        break
-                    elif i < len(self.devices):
-                        new_device = device[i]
-                        self.device = new_device
-                        self.device_name = self.device
-                        self.device_name = device_name
-                        self.device_name = self.device_name
-                        self.wincap = WindowCapture(device_name)
-                    else:
-                        print(i)
+    def __init__(self, vision_image):
+            if len(self.devices) >= 1:
 
-                # while True:
-                #     self.screenshot = self.wincap.get_screenshot()
-                #     # print('screenshot has been mutated to: ' f'{self.screenshot}')
-                #     # print('vision image has been mutated to: ' f'{self.vision_image}')
-                #     points = vision_image.find(self.screenshot,0.8, 'points')
-                #     print(len(AssignDevice.devices))
-                #     quiit()
-                #     cv.imshow(f'{device_name}', self.screenshot)
-                #
-                #     if cv.waitKey(1) == ord('q'):
-                #         cv.destroyAllWindows()
-                #         quit()
-                #         print('Done.')
-                #         break
+                for i in range(len(self.devices)):
+                    print(f'Im seeing {len(self.devices)} devices, currently assigning device:{i}')
+
+
+                    if i == (len(self.devices)) - 1:
+                        print(i)
+                        print(f'No more devices to assign')
+                        break
+
+                    else:
+                        new_device = self.devices[i]
+                        self.device = new_device
+
+
+                        new_device_name = self.adb_names[i]
+                        print(f'ASSIGNING: {self.device} AS: {new_device_name} from the list of {self.adb_names}')
+                        self.new_device_name = new_device_name
+
+                        wincap = WindowCapture(self.new_device_name)
+                        self.new_wincap.append(wincap)
+                        print(self.new_wincap)
+ 
+
+
+
+
+
+
+                    while True:
+
+                        if self.new_device_name:
+
+                            for win in self.new_wincap:
+                                self.screenshot = win.get_screenshot()
+                                cv.imshow(f'{self.new_device_name}', self.screenshot)
+
+
+                        points = vision_image.find(self.screenshot, 0.8, 'points')
+
+                        if cv.waitKey(1) == ord('q'):
+                            cv.destroyAllWindows()
+                            quit()
+                            print('Done.')
+                            break
+
+
+
+
+            if len(self.devices) == 0:
+                print('no device attached')
+                quit()
+
+
 
 
 
@@ -79,9 +105,6 @@ class AssignDevice:
 
 
 
-            if len(self.devices) == 0:
-                    print('no device attached')
-                    quit()
 
 
 
