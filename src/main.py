@@ -10,6 +10,11 @@ from assigndevice import Device
 
 os.path.abspath(__file__)
 
+#   constructor
+class Recognize(Device):
+    def __init__(self, vision_image_file, adb_number):
+        super().__init__(vision_image_file, adb_number)
+        print("Device")
 def img_path(img_name):
     img = f'src//img//{img_name}.png'
     return img
@@ -17,8 +22,6 @@ def img_path(img_name):
 icon_img = img_path("icon")
 print(icon_img)
 
-def android_device(vision_image):
-    Android()
 
 
 
@@ -29,8 +32,11 @@ vision_gntitlebar = Vision(icon_img)
 
 currentDevice = []
 
+adb_names = ["badbar0","badbar1","badbar2","badbar3"]
 
-android_device(vision_gntitlebar)
+
+
+
 
 
 
