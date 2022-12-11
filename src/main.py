@@ -5,16 +5,13 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assigndevice import Device
+from assigndevice import Device, Recognize
 
 
 os.path.abspath(__file__)
 
 #   constructor
-class Recognize(Device):
-    def __init__(self, vision_image_file, adb_number):
-        super().__init__(vision_image_file, adb_number)
-        print("Device")
+
 def img_path(img_name):
     img = f'src//img//{img_name}.png'
     return img
@@ -33,6 +30,14 @@ vision_gntitlebar = Vision(icon_img)
 currentDevice = []
 
 adb_names = ["badbar0","badbar1","badbar2","badbar3"]
+
+
+
+
+for names in adb_names:
+    Recognize(vision_gntitlebar, names, [names])
+
+
 
 
 
