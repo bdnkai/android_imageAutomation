@@ -10,11 +10,9 @@ from windowcapture import WindowCapture
 
 
 class Device(object):
-
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
     def __init__(self, image_file, device_names, device_nums):
-
         #   properties
         self.device = None
         self.adb_name = []
@@ -27,47 +25,66 @@ class Device(object):
         self.points = None
 
 
+class ShowDevice(Device):
+    def __init__(self, test1, test2, test3):
+        super().__init__(test1, test2, test3)
 
+        while True:
 
-
-
+            print(test1, test3)
+            break
+            # cv.imshow(f'{self.new_device_name}', self.screenshot)
 
 
 
 class Recognize(Device):
     def __init__(self, vision_image_file, adb_names, device_number):
         super().__init__(vision_image_file, adb_names, device_number)
-        print("Device")
 
 
         if len(self.devices) >= 1:
+            [device_number] = device_number
+            device_number = device_number
+            print(f'Im seeing {len(self.devices)} devices, there are {len(self.devices) - device_number } left to assign, currently assigning device: {adb_names[device_number]}')
 
-            print(f'Im seeing {len(self.devices)} devices, currently assigning device:{adb_names}')
-            if device_number == (len(self.devices) - 1):
-                print(device_number)
+            print(f'Device Number = {device_number}')
+            print(f'Devices Length = {len(self.devices)}')
+
+            devices_length = len(self.devices)
+
+            if devices_length := device_number:
                 print(f'No more devices to assign')
 
-            else:
-                new_device = self.devices
-                self.device = new_device
 
-                new_device_name = adb_names
-                print(f'ASSIGNING: {self.device} AS: {new_device_name} from the list of {adb_names}')
-                self.new_device_name = new_device_name
-                print(self.new_device_name)
-                wincap = WindowCapture(self.new_device_name)
+            else:
+                new_device = self.devices[device_number]
+                device = new_device
+                print(device)
+                new_device_name = adb_names[device_number]
+                print(f'ASSIGNING: {new_device} AS: {new_device_name} from the list of {adb_names}')
+
+                # new_device_name = new_device_name
+                print(new_device_name)
+
+                wincap = WindowCapture(new_device_name)
                 new_wincap = wincap
                 print(new_wincap)
 
-                self.screenshot = new_wincap.get_screenshot()
+                screenshot = new_wincap.get_screenshot()
                 image_data = vision_image_file
-                image_data.find(self.screenshot, 0.8, 'points')
+                image_data.find(screenshot, 0.8, 'points')
 
-                cv.imshow(f'{self.new_device_name}', self.screenshot)
-                return
+                # cv.imshow(f'{self.new_device_name}', self.screenshot)
+                print(' pushing data to showDevice')
+                print(device_number + 1)
+                adjusted_device_number = device_number + 1
+
+                print(adjusted_device_number)
+                Recognize(vision_image_file, adb_names, [adjusted_device_number])
+                ShowDevice(f'{new_device_name}', screenshot, device_number)
 
 
-            cv.waitkey(0)
+
             if len(self.devices) == 0:
                 print('no device attached')
                 quit()

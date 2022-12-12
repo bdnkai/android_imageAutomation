@@ -31,21 +31,21 @@ currentDevice = []
 
 adb_names = ["badbar0","badbar1","badbar2","badbar3"]
 
+listOfDevices = Device.devices
+totalDevices = len(listOfDevices)
+
+print(range(len(listOfDevices)))
+print(range(totalDevices))
+print(totalDevices)
+
+for i in adb_names :
+    if i < totalDevices:
+        print('nothing else to assign, bye')
+    else:
+        Recognize(vision_gntitlebar, [adb_names][i], [i])
 
 
 
-for names in adb_names:
-    Recognize(vision_gntitlebar, names, [names])
 
 
 
-
-
-
-
-
-
-# def adb_recognition(fetch_vision):
-#         if AssignDevice.screenshot:
-#             fetch_vision = vision_image.find(AssignDevice.screenshot, AssignDevice.device_name, 0.7, 'points')
-#             return self.fetch_vi
