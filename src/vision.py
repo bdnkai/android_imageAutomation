@@ -1,7 +1,7 @@
 
 import cv2 as cv
 import numpy as np
-from windowcapture import WindowCapture
+# from windowcapture import WindowCapture
 
 
 class Vision:
@@ -25,7 +25,7 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, haystack_img, threshold=0.5, debug_mode=None):
+    def find(self, screen_name, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
 
         self.needle_img = np.array(self.needle_img, dtype="uint8")
@@ -84,8 +84,10 @@ class Vision:
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
-
-        # if debug_mode:
-        #     cv.imshow('test', haystack_img)
+        #     if debug_mode:
+        # # cv.imshow(f' {device_name}', haystack_img)
+        #
+        #         cv.imshow(f'{screen_name}', haystack_img)
+        #     cv.waitKey(delay= 1000)
 
         return points

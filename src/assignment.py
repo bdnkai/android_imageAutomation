@@ -3,7 +3,6 @@ import time
 import threading
 import cv2 as cv
 import numpy as np
-from PIL import Image
 from vision import Vision
 from windowcapture import WindowCapture
 
@@ -25,15 +24,13 @@ class Device(object):
         self.points = None
 
 
-class ShowDevice(Device):
-    def __init__(self, test1, test2, test3):
-        super().__init__(test1, test2, test3)
 
-        while True:
 
-            print(test1, test3)
-            break
-            # cv.imshow(f'{self.new_device_name}', self.screenshot)
+
+
+def ShowDevice(device_name, screenshot, sequence):
+    if sequence is not None:
+        print("LOL")
 
 
 
@@ -43,27 +40,24 @@ class Recognize(Device):
 
 
         if len(self.devices) >= 1:
-            [device_number] = device_number
             device_number = device_number
-            print(f'Im seeing {len(self.devices)} devices, there are {len(self.devices) - device_number } left to assign, currently assigning device: {adb_names[device_number]}')
-
-            print(f'Device Number = {device_number}')
-            print(f'Devices Length = {len(self.devices)}')
 
             devices_length = len(self.devices)
 
-            if devices_length := device_number:
-                print(f'No more devices to assign')
+            if devices_length == device_number:
+                print(f' No more devices to assign')
 
 
-            else:
+
+            elif devices_length >= device_number:
+                print(f' Im seeing {len(self.devices)} devices, there are {len(self.devices) - device_number } left to assign, currently assigning device: {adb_names[device_number]}')
                 new_device = self.devices[device_number]
                 device = new_device
                 print(device)
                 new_device_name = adb_names[device_number]
-                print(f'ASSIGNING: {new_device} AS: {new_device_name} from the list of {adb_names}')
+                print(f' ASSIGNING: {new_device} AS: {new_device_name} from the list of {adb_names}')
 
-                # new_device_name = new_device_name
+                new_device_name = f'{new_device_name}'
                 print(new_device_name)
 
                 wincap = WindowCapture(new_device_name)
@@ -72,16 +66,21 @@ class Recognize(Device):
 
                 screenshot = new_wincap.get_screenshot()
                 image_data = vision_image_file
-                image_data.find(screenshot, 0.8, 'points')
+                image_data.find(new_device_name,screenshot, 0.8, 'points')
 
-                # cv.imshow(f'{self.new_device_name}', self.screenshot)
+
+
+
+                # cv.imshow(f' {self.new_device_name}', self.screenshot)
                 print(' pushing data to showDevice')
-                print(device_number + 1)
-                adjusted_device_number = device_number + 1
 
-                print(adjusted_device_number)
-                Recognize(vision_image_file, adb_names, [adjusted_device_number])
-                ShowDevice(f'{new_device_name}', screenshot, device_number)
+
+                ShowDevice(f' {new_device_name}', screenshot, device_number)
+
+            else:
+                adjusted_device_number = device_number + 1
+                Recognize(vision_image_file, adb_names, adjusted_device_number)
+
 
 
 
