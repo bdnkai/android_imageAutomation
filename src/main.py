@@ -5,7 +5,7 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assignment import Device, Recognize, ShowDevice
+from assignment import Device, Recognize
 
 
 os.path.abspath(__file__)
@@ -40,11 +40,21 @@ vision_gntitlebar = Vision(icon_img)
 
 # ===== ASSIGNMENT =====
 
-for i in range(totalDevices):
+while True:
 
-    if i in range(len(adb_names)):
-        print('pushing assignment')
-        Recognize(vision_gntitlebar, adb_names, i)
+    for i in range(totalDevices):
+
+        if i in range(len(adb_names)):
+            print('pushing assignment')
+            Recognize(vision_gntitlebar, adb_names, i)
+            cv.waitKey(1)
+
+
+
+
+    # press 'q' with the output window focused to exit.
+    # waits 1 ms every loop to process key presses
+
 
 
 # while True:

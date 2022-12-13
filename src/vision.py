@@ -1,15 +1,13 @@
-
 import cv2 as cv
 import numpy as np
-# from windowcapture import WindowCapture
 
 
 class Vision:
 
     # properties
     needle_img = None
-    needle_w = 0
-    needle_h = 0
+    needle_w = 1280
+    needle_h = 720
     method = None
 
     # constructor
@@ -17,6 +15,7 @@ class Vision:
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
         self.needle_img = cv.imread(needle_img_path)
+
         # Save the dimensions of the needle image
         self.needle_w = self.needle_img.shape[1]
         self.needle_h = self.needle_img.shape[0]
@@ -25,12 +24,9 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, screen_name, haystack_img, threshold=0.5, debug_mode=None):
+    def find(self, device_name, haystack_img, screen_name, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
-
-        self.needle_img = np.array(self.needle_img, dtype="uint8")
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
-
 
         # Get the all the positions from the match result that exceed our threshold
         locations = np.where(result >= threshold)
@@ -56,7 +52,7 @@ class Vision:
 
         points = []
         if len(rectangles):
-            print('Found needle.')
+            #print('Found needle.')
 
             line_color = (0, 255, 0)
             line_type = cv.LINE_4
@@ -65,7 +61,8 @@ class Vision:
 
             # Loop over all the rectangles
             for (x, y, w, h) in rectangles:
-
+                print(f'X: {x}  Y: {y}')
+                print(f'W: {w} H: {h}')    
                 # Determine the center position
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
@@ -83,17 +80,13 @@ class Vision:
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
-                                markerSize=20, thickness=2)
-            print(x, y)
-            return points
+                                markerSize=40, thickness=2)
+
         if debug_mode:
-            cv.imshow(f'{screen_name}', haystack_img)
-            cv.waitKey(0)
 
-            if cv.waitKey(1) == ord('q'):
-                cv.destroyAllWindows()
-                quit()
+            print(loc[0])
+            cv.imshow('test', haystack_img)
+            #cv.waitKey()
+            #cv.imwrite('result_click_point.jpg', haystack_img)
 
-
-
-
+        return points
