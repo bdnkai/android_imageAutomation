@@ -84,10 +84,16 @@ class Vision:
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
-        #     if debug_mode:
-        # # cv.imshow(f' {device_name}', haystack_img)
-        #
-        #         cv.imshow(f'{screen_name}', haystack_img)
-        #     cv.waitKey(delay= 1000)
+            print(x, y)
+            return points
+        if debug_mode:
+            cv.imshow(f'{screen_name}', haystack_img)
+            cv.waitKey(0)
 
-        return points
+            if cv.waitKey(1) == ord('q'):
+                cv.destroyAllWindows()
+                quit()
+
+
+
+

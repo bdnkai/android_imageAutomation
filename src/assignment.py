@@ -27,13 +27,25 @@ class Device(object):
 
 
 
-
+imageList = []
 def ShowDevice(device_name, screenshot, sequence):
-    if sequence is not None:
-        print("LOL")
+    if device_name is not None:
+        print(len(imageList))
+        imageList.append(screenshot)
+        # print(imageList)
+    if len(imageList) == len(Device.devices):
+        while True:
+            cv.imshow(f'{device_name}', imageList[sequence])
+            cv.waitKey(delay= 1000)
+
+    if cv.waitKey(1) == ord('q'):
+        cv.destroyAllWindows()
 
 
 
+
+
+screenshot = []
 class Recognize(Device):
     def __init__(self, vision_image_file, adb_names, device_number):
         super().__init__(vision_image_file, adb_names, device_number)
@@ -49,7 +61,7 @@ class Recognize(Device):
 
 
 
-            elif devices_length >= device_number:
+            if devices_length > device_number:
                 print(f' Im seeing {len(self.devices)} devices, there are {len(self.devices) - device_number } left to assign, currently assigning device: {adb_names[device_number]}')
                 new_device = self.devices[device_number]
                 device = new_device
@@ -68,14 +80,6 @@ class Recognize(Device):
                 image_data = vision_image_file
                 image_data.find(new_device_name,screenshot, 0.8, 'points')
 
-
-
-
-                # cv.imshow(f' {self.new_device_name}', self.screenshot)
-                print(' pushing data to showDevice')
-
-
-                ShowDevice(f' {new_device_name}', screenshot, device_number)
 
             else:
                 adjusted_device_number = device_number + 1
