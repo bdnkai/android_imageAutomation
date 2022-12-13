@@ -21,10 +21,10 @@ class WindowCapture:
             raise Exception('Window not found: {}'.format(window_name))
 
         # get the window size
-        window_rect = win32gui.GetWindowRect(self.hwnd)
+        self.window_rect = win32gui.GetWindowRect(self.hwnd)
 
-        self.w = window_rect[2] - window_rect[0]
-        self.h = window_rect[3] - window_rect[1]
+        self.w = self.window_rect[2] - self.window_rect[0]
+        self.h = self.window_rect[3] - self.window_rect[1]
 
         # account for the window border and titlebar and cut them off
         border_pixels = 0
@@ -36,10 +36,12 @@ class WindowCapture:
 
         # set the cropped coordinates offset so we can translate screenshot
         # images into actual screen positions
-        self.offset_x = window_rect[0] + self.cropped_x
-        self.offset_y = window_rect[1] + self.cropped_y
+        self.offset_x = self.window_rect[0] + self.cropped_x
+        self.offset_y = self.window_rect[1] + self.cropped_y
 
-        print(f'H:{self.h} W:{self.w}')
+        self.size = (self.w, self.h)
+        print(f'{self.size[1]}') # To get specific x and y use this[0] as X or this[1] as Y
+
     def get_screenshot(self):
         
         # get the window image data
