@@ -30,12 +30,6 @@ class Device(object):
 
 
 
-imageList = []
-
-
-
-
-
 
 
 class Recognize(Device):
@@ -49,7 +43,7 @@ class Recognize(Device):
 
                 devices_length = len(cls.devices)
 
-                if devices_length is device_number:
+                if devices_length == device_number:
                     # print(f' No more devices to assign')
                     quit()
 
@@ -67,13 +61,37 @@ class Recognize(Device):
                     # print(new_device_name)
 
                     wincap = WindowCapture(new_device_name)
-                    new_wincap = wincap
+                    screenshot = wincap.get_screenshot()
+                    # new_wincap = wincap
                     # print(new_wincap)
 
-                    screenshot = new_wincap.get_screenshot()
 
-                    image_data = vision_image_file
-                    image_data.find(new_device_name, screenshot, new_device, 0.8, 'rectangles')
+                    # get scale from official h *  w
+                    official_h = wincap.size_h
+                    official_w = wincap.size_w
+                    float_scale_h = float(official_h/ 720)
+                    float_scale_w = float(official_w/ 1280)
+                    scale = (float_scale_h + float_scale_w) / 2
+
+                    print(f'--FLOAT H:{float_scale_h} FLOAT W: {float_scale_w}')
+                    print(f'capturedW: {official_w}  CAPTURED_H: {official_h}  ')
+
+
+                    image_path = vision_image_file
+
+                    # convert img size
+                    img = cv.imread(image_path)
+                    scale_width = int(img.shape[1] / scale)
+                    scale_height = int(img.shape[0] / scale)
+                    dim = (scale_width, scale_height)
+                    resized = cv.resize(img, dim, interpolation = cv.INTER_AREA)
+                    print('Resized Dimensions : ',resized.shape)
+                    vision_image = Vision(resized)
+                    # cv.imshow("Resized image", resized)
+                    # cv.waitKey(0)
+                    # cv.destroyAllWindows()
+                    image_data = vision_image
+                    image_data.find(screenshot, 0.45, 'rectangles')
 
                 if cv.waitKey(1) == ord('q'):
                     quit()

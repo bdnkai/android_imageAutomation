@@ -5,8 +5,8 @@ import win32gui, win32ui, win32con
 class WindowCapture:
 
     # properties
-    w = 1280
-    h = 720
+    w = 0
+    h = 0
     hwnd = None
     cropped_x = 0
     cropped_y = 0
@@ -39,8 +39,9 @@ class WindowCapture:
         self.offset_x = self.window_rect[0] + self.cropped_x
         self.offset_y = self.window_rect[1] + self.cropped_y
 
-        self.size = (self.w, self.h)
-        print(f'{self.size[1]}') # To get specific x and y use this[0] as X or this[1] as Y
+        self.size_w = self.w
+        self.size_h = self.h
+
 
     def get_screenshot(self):
         
