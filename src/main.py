@@ -27,12 +27,13 @@ def img_path(img_name):
     img = f'src//img//{img_name}.png'
     return img
 
-icon_img = img_path("test")
-print(icon_img)
+icon_img = img_path("icon2")
+# print(icon_img)
+
+
 
 
 # vision_gntitlebar = Vision(icon_img)
-
 
 
 

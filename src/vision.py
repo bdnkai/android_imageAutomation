@@ -16,6 +16,9 @@ class Vision:
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
         self.needle_img = needle_img_path
 
+        # scale_width = int(img.shape[1] / float_scale_w )
+        # scale_height = int(img.shape[0] / float_scale_h )
+
         # Save the dimensions of the needle image
         self.needle_w = self.needle_img.shape[1]
         self.needle_h = self.needle_img.shape[0]
@@ -24,7 +27,7 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, haystack_img, threshold=0.5, debug_mode=None):
+    def find(self, scale, haystack_img, threshold=0.5, debug_mode=None):
         # run the OpenCV algorithm
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
 
@@ -66,8 +69,12 @@ class Vision:
                 # Determine the center position
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
+                actual_center_x = scale * center_x
+                actual_center_y = center_y / scale
+                print(actual_center_x)
                 # Save the points
                 points.append((center_x, center_y))
+
 
                 if debug_mode == 'rectangles':
                     # Determine the box position
