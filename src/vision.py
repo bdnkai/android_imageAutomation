@@ -90,8 +90,8 @@ class Vision:
                                 markerSize=40, thickness=2)
 
         # if debug_mode:
-            # cv.imshow('test', haystack_img)
-            # cv.waitKey(1)
+            cv.imshow('test', haystack_img)
+            # cv.waitKey(0)
             #cv.imwrite('result_click_point.jpg', haystack_img)
 
             return points

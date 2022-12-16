@@ -11,7 +11,7 @@ class Device(object):
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
 
-    # devices[0].shell('input tap 281 119')
+    # devices[0].shell('input tap 443 168')
 
     def __init__(self, image_file, device_names, device_nums):
         #   properties
@@ -61,41 +61,35 @@ class Recognize(Device):
                 float_scale_w = float(official_w / 1280)
                 scale = (float_scale_h + float_scale_w) / 2
 
-                print(f'--FLOAT H:{float_scale_h} FLOAT W: {float_scale_w}')
-                print(int(scale*100))
-                print(f'capturedW: {official_w}  CAPTURED_H: {official_h}  ')
+                # print(f'--FLOAT H:{float_scale_h} FLOAT W: {float_scale_w}')
+                # print(int(scale*100))
+                # print(f'capturedW: {official_w}  CAPTURED_H: {official_h}  ')
 
                 image_path = vision_image_file
 
                 # convert img size
                 img = cv.imread(image_path)
-                scale_width = int(img.shape[1] / float_scale_w )
-                scale_height = int(img.shape[0] / float_scale_h )
-                scale = (scale_width + scale_height) / 2
+                # scale_width = int(img.shape[1] / float_scale_w )
+                # scale_height = int(img.shape[0] / float_scale_h )
+                # scale = (scale_width + scale_height) / 2
 
-                if scale_width <= int(img.shape[1]):
+                # if scale_width == int(img.shape[1]):
+                #
+                #     dim = (scale_height, scale_width)
+                #     resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
+                #     print('Resized Dimensions : ', resized.shape)
+                #     vision_image = Vision(resized)
+                #     # cv.imshow("Resized image", resized)
+                #     image_data = vision_image
+                #     image_data.find(scale, screenshot, 0.65, 'rectangles')
 
-                    dim = (scale_height, scale_width)
-                    resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
-                    print('Resized Dimensions : ', resized.shape)
-                    vision_image = Vision(resized)
-                    cv.imshow("Resized image", resized)
-                    image_data = vision_image
-                    image_data.find(scale, screenshot, 0.65, 'points')
+                # else:
+                #     dim = print(int(img.shape[1]), int(img.shape[0]))
 
-                else:
-                    dim = print(int(img.shape[1]), int(img.shape[0]))
+                vision_image = Vision(img)
+                image_data = vision_image
+                tap_location = image_data.find(scale, screenshot, 0.85, 'rectangles')
 
-                    vision_image = Vision(img)
-                    image_data = vision_image
-                    tap_location = image_data.find(scale, screenshot, 0.65, 'rectangles')
-
-                    x = tap_location
-                    y = tap_location
-
-
-                    print(f'POOOOOIINTS:: {x} {y}')
-                    device.shell(f'input tap {x} {y}')
 
             if cv.waitKey(1) == ord('q'):
                 quit()
