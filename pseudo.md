@@ -7,8 +7,8 @@
 
 
 
-            SqPix_before = aW x aH (type int) <-- the dimension of the window size at time the image was taken
-            SqPix_after = bW x bH (type int) <-- new dimension
+            prev_sqpx = aW x aH (type int) <-- the dimension of the window size at time the image was taken
+            curr_sqpx = bW x bH (type int) <-- new dimension
 
             scale_w = adjusted_W / previous_W
             scale_h = adjusted_H / previous_H
