@@ -20,15 +20,10 @@ class Device(object):
 
 
 class Recognize(Device):
-    # def __init__(self, vision_image_file, adb_names, device_number):
-
-    screenshot = []
-
-    def __new__(cls, vision_image_file, adb_names, device_number):
+    def __new__(cls, vision_image_file, adb_names, device_sequence):
 
         if len(cls.devices) >= 1:
-            device_number = device_number
-
+            device_number = device_sequence
             devices_length = len(cls.devices)
 
             if devices_length == device_number:
@@ -36,30 +31,25 @@ class Recognize(Device):
                 quit()
 
             if devices_length > device_number:
-                # print(f' Im seeing {len(cls.devices)} devices, there are {len(cls.devices) - device_number } left to assign, currently assigning device: {adb_names[device_number]}')
+                # determines new devices and points device as a new_device
                 new_device = cls.devices[device_number]
                 device = new_device
-                # print(device)
+
+                # assigns current device to a name within an array
                 new_device_name = adb_names[device_number]
-                # print(f' ASSIGNING: {new_device} AS: {new_device_name} from the list of {adb_names}')
-
                 new_device_name = f'{new_device_name}'
-                # print(new_device_name)
 
+                # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
                 screenshot = wincap.get_screenshot()
 
-
-
-
-
-                # determine previous dimension
+                # determine previous dimensions, and obtain it's total square pixels
                 prev_w = WindowCapture.w
                 prev_h = WindowCapture.h
-                prev_sqpx = prev_w * prev_w
+                prev_sqpx = prev_w * prev_h
                 print(prev_w, prev_h, prev_sqpx)
 
-                # determine current dimensions
+                # determine current dimensions, and obtain it's total square pixels
                 curr_w = wincap.size_w
                 curr_h = wincap.size_h
                 curr_sqpx = curr_w * curr_h
@@ -93,16 +83,23 @@ class Recognize(Device):
 
                 print(final_img_w, final_img_h, final_img_sqpx)
 
+                # finalizes new dimensions of our img_file for opencv
                 dim = (final_img_h, final_img_w)
                 img_resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
-                print(f'adjusted dimensions: {img_resized.shape}')
 
+                # sends adjusted img dimension to Vision Module
                 adjusted_vision_image = Vision(img_resized)
-
-
                 image_data = adjusted_vision_image
-                tap_location = image_data.find(scale_avg, screenshot, 0.85, 'rectangles')
 
+                # returns the (x, y) location at which the image is found
+                tap_location = image_data.find(scale_avg, screenshot, 0.85, 'rectangles')
+                if tap_location is not None:
+
+                    tap_location_x = int(tap_location[0] / scale_avg)
+                    tap_location_y = int(tap_location[1] / scale_avg)
+
+                    print(f'{tap_location_x} {tap_location_y}')
+                    device.shell(f'input tap {tap_location_x} {tap_location_y}')
 
             if cv.waitKey(1) == ord('q'):
                 quit()
@@ -111,7 +108,7 @@ class Recognize(Device):
 
 
         else:
-            adjusted_device_number = device_number + 1
+            adjusted_device_number = device_sequence + 1
             Recognize(vision_image_file, adb_names, adjusted_device_number)
 
         if len(cls.devices) == 0:

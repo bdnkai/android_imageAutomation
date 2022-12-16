@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from windowcapture import WindowCapture
 
 class Vision:
 
@@ -28,7 +27,7 @@ class Vision:
         self.method = method
 
 
-    def find(self, scale, haystack_img, threshold=0.5, debug_mode=None):
+    def find(self, scale_avg, haystack_img, threshold=0.5, debug_mode=None):
 
         # run the OpenCV algorithm
 
@@ -67,7 +66,7 @@ class Vision:
 
             # Loop over all the rectangles
             for (x, y, w, h) in rectangles:
-                print(f'VISION_X: {x}  VISION_Y: {y}')
+                print(f'VISION_X: {int(x /scale_avg)}  VISION_Y: {int(y/scale_avg)}')
                 print(f'VISION_W: {w} VISION_H: {h}')
                 # Determine the center position
                 center_x = x + int(w/2)
@@ -91,7 +90,8 @@ class Vision:
 
         # if debug_mode:
             cv.imshow('test', haystack_img)
+            [points] = points
             # cv.waitKey(0)
             #cv.imwrite('result_click_point.jpg', haystack_img)
 
-            return points
+        return points
