@@ -1,20 +1,22 @@
 import cv2 as cv
 import numpy as np
 
-
 class Vision:
 
     # properties
     needle_img = None
-    needle_w = 1280
-    needle_h = 720
+    needle_w = 0
+    needle_h = 0
     method = None
 
     # constructor
     def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
         # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
-        self.needle_img = cv.imread(needle_img_path)
+        self.needle_img = needle_img_path
+
+        # scale_width = int(img.shape[1] / float_scale_w )
+        # scale_height = int(img.shape[0] / float_scale_h )
 
         # Save the dimensions of the needle image
         self.needle_w = self.needle_img.shape[1]
@@ -24,8 +26,11 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
-    def find(self, device_name, haystack_img, screen_name, threshold=0.5, debug_mode=None):
+
+    def find(self, scale_avg, haystack_img, threshold=0.5, debug_mode=None):
+
         # run the OpenCV algorithm
+
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
 
         # Get the all the positions from the match result that exceed our threshold
@@ -47,9 +52,9 @@ class Vision:
         # done. If you put it at 2 then an object needs at least 3 overlapping rectangles to appear
         # in the result. I've set eps to 0.5, which is:
         # "Relative difference between sides of the rectangles to merge them into a group."
-        rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
+        rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=2, eps=0.5)
         #print(rectangles)
-
+        
         points = []
         if len(rectangles):
             #print('Found needle.')
@@ -61,13 +66,14 @@ class Vision:
 
             # Loop over all the rectangles
             for (x, y, w, h) in rectangles:
-                print(f'X: {x}  Y: {y}')
-                print(f'W: {w} H: {h}')    
+                print(f'VISION_X: {int(x /scale_avg)}  VISION_Y: {int(y/scale_avg)}')
+                print(f'VISION_W: {w} VISION_H: {h}')
                 # Determine the center position
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
                 # Save the points
                 points.append((center_x, center_y))
+
 
                 if debug_mode == 'rectangles':
                     # Determine the box position
@@ -82,11 +88,10 @@ class Vision:
                                 color=marker_color, markerType=marker_type,
                                 markerSize=40, thickness=2)
 
-        if debug_mode:
-
-            print(loc[0])
+        # if debug_mode:
             cv.imshow('test', haystack_img)
-            #cv.waitKey()
+            [points] = points
+            # cv.waitKey(0)
             #cv.imwrite('result_click_point.jpg', haystack_img)
 
         return points

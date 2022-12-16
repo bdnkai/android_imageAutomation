@@ -5,7 +5,8 @@ import os
 from time import time
 from vision import Vision
 from windowcapture import WindowCapture
-from assignment import Device, Recognize
+from assignment import Recognize
+from assignment import Device
 
 
 os.path.abspath(__file__)
@@ -27,27 +28,32 @@ def img_path(img_name):
     return img
 
 icon_img = img_path("icon")
-print(icon_img)
-
-
-vision_gntitlebar = Vision(icon_img)
+# print(icon_img)
 
 
 
 
+# vision_gntitlebar = Vision(icon_img)
 
 
 
-# ===== ASSIGNMENT =====
-
+looplist = []
 while True:
-
+    print(Device.devices)
     for i in range(totalDevices):
-
         if i in range(len(adb_names)):
             print('pushing assignment')
-            Recognize(vision_gntitlebar, adb_names, i)
-            cv.waitKey(1)
+            Recognize(icon_img, adb_names, i)
+    # ===== ASSIGNMENT =====
+
+# while True:
+#
+#     for i in range(totalDevices):
+#
+#         if i in range(len(adb_names)):
+#             print('pushing assignment')
+#             Recognize(vision_gntitlebar, adb_names, i)
+#             cv.waitKey(1)
 
 
 

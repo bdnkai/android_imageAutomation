@@ -2,6 +2,68 @@
 // mq_position = 947 , 237
 // skip_position = 1120, 53
 
+2DO:
+    Get official tap position vs pointer location
+
+
+
+            prev_sqpx = aW x aH (type int) <-- the dimension of the window size at time the image was taken
+            curr_sqpx = bW x bH (type int) <-- new dimension
+
+            scale_w = adjusted_W / previous_W
+            scale_h = adjusted_H / previous_H
+            scale_avg = ( scale_w + scale_h) / 2
+
+            final_sqPx = scale_avg * previous_SqPx
+
+            final_w = final_sqPx / h
+            final_h = final_sqPx / w
+
+            new_img_dimension = final_w , final_h
+
+            resolution scale =  sqpx_after / sqpx_before
+
+            
+
+            W: 1280  , H: 720 <-- Initial Res @ the time Image was taken
+
+            VISION_X: 443  VISION_Y: 168  <-- recognized image location x y
+
+            VISION_W: 64 VISION_H: 59 <---- size of the image
+
+
+
+
+
+
+            scale resolution = // capw
+
+
+
+            a/b = c
+
+
+            pointer location = cW -
+
+
+
+
+
+
+
+
+
+
+    1) refactor img path to be in its own component
+        1B) import it to main to call on Assign_Device as device [COMPLETED]
+
+    2) give Assign Device an argument for img_path [COMPLETED]
+
+
+
+
+
+
 //  autopy2lon
 //  create image recognition to automate incidents on multiple android devices simultaneously 
 
