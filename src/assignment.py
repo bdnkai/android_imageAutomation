@@ -48,47 +48,60 @@ class Recognize(Device):
 
                 wincap = WindowCapture(new_device_name)
                 screenshot = wincap.get_screenshot()
-                # new_wincap = wincap
-                # print(new_wincap)
 
-                # get scale from official h *  w
-                official_h = wincap.size_h
-                official_w = wincap.size_w
 
-                # check official capture before scaling
 
-                float_scale_h = float(official_h / 720)
-                float_scale_w = float(official_w / 1280)
-                scale = (float_scale_h + float_scale_w) / 2
 
-                # print(f'--FLOAT H:{float_scale_h} FLOAT W: {float_scale_w}')
-                # print(int(scale*100))
-                # print(f'capturedW: {official_w}  CAPTURED_H: {official_h}  ')
 
+                # determine previous dimension
+                prev_w = WindowCapture.w
+                prev_h = WindowCapture.h
+                prev_sqpx = prev_w * prev_w
+                print(prev_w, prev_h, prev_sqpx)
+
+                # determine current dimensions
+                curr_w = wincap.size_w
+                curr_h = wincap.size_h
+                curr_sqpx = curr_w * curr_h
+                print(curr_w, curr_h, curr_sqpx)
+
+                # converts img_file to a readable cv2 format
                 image_path = vision_image_file
-
-                # convert img size
                 img = cv.imread(image_path)
-                # scale_width = int(img.shape[1] / float_scale_w )
-                # scale_height = int(img.shape[0] / float_scale_h )
-                # scale = (scale_width + scale_height) / 2
 
-                # if scale_width == int(img.shape[1]):
-                #
-                #     dim = (scale_height, scale_width)
-                #     resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
-                #     print('Resized Dimensions : ', resized.shape)
-                #     vision_image = Vision(resized)
-                #     # cv.imshow("Resized image", resized)
-                #     image_data = vision_image
-                #     image_data.find(scale, screenshot, 0.65, 'rectangles')
+                # determine scale value for both height and width
+                scale_w = float(curr_w / prev_w)
+                scale_h = float(curr_h / prev_h)
 
-                # else:
-                #     dim = print(int(img.shape[1]), int(img.shape[0]))
+                # obtains the average scale value
+                scale_avg = float(scale_w + scale_h) / 2
+                print(scale_avg)
 
-                vision_image = Vision(img)
-                image_data = vision_image
-                tap_location = image_data.find(scale, screenshot, 0.85, 'rectangles')
+
+
+
+                # determines the dimensions of the img_file
+                img_w = int(img.shape[1])
+                img_h = int(img.shape[0])
+                img_sqpx = img_w * img_h
+                print(img_w, img_h, img_sqpx)
+
+                # determines the adjusted dimensions of our img_file to adapt changes in curr_sqpx
+                final_img_sqpx = int(scale_avg * img_sqpx)
+                final_img_w = int(final_img_sqpx / img_h)
+                final_img_h = int(final_img_sqpx / img_w)
+
+                print(final_img_w, final_img_h, final_img_sqpx)
+
+                dim = (final_img_h, final_img_w)
+                img_resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
+                print(f'adjusted dimensions: {img_resized.shape}')
+
+                adjusted_vision_image = Vision(img_resized)
+
+
+                image_data = adjusted_vision_image
+                tap_location = image_data.find(scale_avg, screenshot, 0.85, 'rectangles')
 
 
             if cv.waitKey(1) == ord('q'):
