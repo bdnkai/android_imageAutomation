@@ -27,8 +27,11 @@ class Vision:
         # TM_CCOEFF, TM_CCOEFF_NORMED, TM_CCORR, TM_CCORR_NORMED, TM_SQDIFF, TM_SQDIFF_NORMED
         self.method = method
 
+
     def find(self, scale, haystack_img, threshold=0.5, debug_mode=None):
+
         # run the OpenCV algorithm
+
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
 
         # Get the all the positions from the match result that exceed our threshold
@@ -69,9 +72,6 @@ class Vision:
                 # Determine the center position
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
-                actual_center_x = scale * center_x
-                actual_center_y = center_y / scale
-                print(actual_center_x)
                 # Save the points
                 points.append((center_x, center_y))
 
@@ -89,9 +89,9 @@ class Vision:
                                 color=marker_color, markerType=marker_type,
                                 markerSize=40, thickness=2)
 
-        if debug_mode:
-            cv.imshow('test', haystack_img)
-            cv.waitKey(1)
+        # if debug_mode:
+            # cv.imshow('test', haystack_img)
+            # cv.waitKey(1)
             #cv.imwrite('result_click_point.jpg', haystack_img)
 
-        return points
+            return points

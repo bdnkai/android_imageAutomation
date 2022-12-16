@@ -16,14 +16,7 @@ class Device(object):
     def __init__(self, image_file, device_names, device_nums):
         #   properties
         self.device = None
-        self.adb_name = []
-        self.new_wincap = []
-        self.device_h = 0
-        self.device_w = 0
 
-        self.screenshot = []
-        self.vision_image = None
-        self.points = None
 
 
 class Recognize(Device):
@@ -69,6 +62,7 @@ class Recognize(Device):
                 scale = (float_scale_h + float_scale_w) / 2
 
                 print(f'--FLOAT H:{float_scale_h} FLOAT W: {float_scale_w}')
+                print(int(scale*100))
                 print(f'capturedW: {official_w}  CAPTURED_H: {official_h}  ')
 
                 image_path = vision_image_file
@@ -81,16 +75,16 @@ class Recognize(Device):
 
                 if scale_width <= int(img.shape[1]):
 
-                    dim = (scale_width, scale_height)
+                    dim = (scale_height, scale_width)
                     resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
                     print('Resized Dimensions : ', resized.shape)
                     vision_image = Vision(resized)
                     cv.imshow("Resized image", resized)
                     image_data = vision_image
-                    image_data.find(scale, screenshot, 0.25, 'rectangles')
+                    image_data.find(scale, screenshot, 0.65, 'points')
 
                 else:
-                    dim = (int(img.shape[1]), int(img.shape[0]))
+                    dim = print(int(img.shape[1]), int(img.shape[0]))
 
                     vision_image = Vision(img)
                     image_data = vision_image

@@ -27,7 +27,7 @@ def img_path(img_name):
     img = f'src//img//{img_name}.png'
     return img
 
-icon_img = img_path("icon2")
+icon_img = img_path("icon")
 # print(icon_img)
 
 
@@ -39,8 +39,8 @@ icon_img = img_path("icon2")
 
 looplist = []
 while True:
+    print(Device.devices)
     for i in range(totalDevices):
-
         if i in range(len(adb_names)):
             print('pushing assignment')
             Recognize(icon_img, adb_names, i)
