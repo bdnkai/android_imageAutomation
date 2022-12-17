@@ -28,6 +28,7 @@ def img_path(img_name):
     return img
 
 icon_img = img_path("icon")
+
 # print(icon_img)
 
 
@@ -38,35 +39,20 @@ icon_img = img_path("icon")
 
 
 looplist = []
-while True:
-    print(Device.devices)
-    for i in range(totalDevices):
-        if i in range(len(adb_names)):
-            print('pushing assignment')
-            Recognize(icon_img, adb_names, i)
+
     # ===== ASSIGNMENT =====
 
-# while True:
-#
-#     for i in range(totalDevices):
-#
-#         if i in range(len(adb_names)):
-#             print('pushing assignment')
-#             Recognize(vision_gntitlebar, adb_names, i)
-#             cv.waitKey(1)
+while True:
 
+    for adb in range(totalDevices):
+        if adb in range(len(adb_names)):
+            Recognize(icon_img, adb_names, adb)
 
+    if cv.waitKey(1) == ord('q'):
+        quit()
+        cv.destroyAllWindows()
+        break
 
-
-    # press 'q' with the output window focused to exit.
-    # waits 1 ms every loop to process key presses
-
-
-
-# while True:
-    # if Recognize:
-    #     print(ShowDevice)
-      # cv.imshow(ShowDevice.device_name)
 
 
 

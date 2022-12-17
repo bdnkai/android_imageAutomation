@@ -56,6 +56,7 @@ class Vision:
         #print(rectangles)
         
         points = []
+        action_coordinates = []
         if len(rectangles):
             #print('Found needle.')
 
@@ -68,6 +69,21 @@ class Vision:
             for (x, y, w, h) in rectangles:
                 print(f'VISION_X: {int(x /scale_avg)}  VISION_Y: {int(y/scale_avg)}')
                 print(f'VISION_W: {w} VISION_H: {h}')
+
+                scale_x = int(x / scale_avg)
+                scale_y = int(y / scale_avg)
+                center_w = int(h/2)
+                center_h = int(w/2)
+
+                action_x = scale_x + center_w
+                action_y = scale_y + center_h
+
+                action_coordinates.append((action_x, action_y))
+                print(action_coordinates)
+
+
+
+
                 # Determine the center position
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
@@ -86,12 +102,12 @@ class Vision:
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
-                                markerSize=40, thickness=2)
+                                markerSize=10, thickness=2)
 
-        # if debug_mode:
+        if debug_mode:
             cv.imshow('test', haystack_img)
-            [points] = points
+            # [points] = points
             # cv.waitKey(0)
             #cv.imwrite('result_click_point.jpg', haystack_img)
 
-        return points
+        return action_coordinates

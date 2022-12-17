@@ -68,8 +68,6 @@ class Recognize(Device):
                 print(scale_avg)
 
 
-
-
                 # determines the dimensions of the img_file
                 img_w = int(img.shape[1])
                 img_h = int(img.shape[0])
@@ -92,14 +90,16 @@ class Recognize(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                tap_location = image_data.find(scale_avg, screenshot, 0.85, 'rectangles')
-                if tap_location is not None:
-
-                    tap_location_x = int(tap_location[0] / scale_avg)
-                    tap_location_y = int(tap_location[1] / scale_avg)
-
-                    print(f'{tap_location_x} {tap_location_y}')
-                    device.shell(f'input tap {tap_location_x} {tap_location_y}')
+                tap_location = image_data.find(scale_avg, screenshot, 0.65, 'points')
+                print(tap_location)
+                # if tap_location is not None:
+                #
+                #     tap_location_x = int(tap_location[0] / scale_avg)
+                #     tap_location_y = int(tap_location[1] / scale_avg)
+                #
+                #     print(f'{tap_location_x} {tap_location_y}')
+                #     device.shell(f'input tap {tap_location_x} {tap_location_y}')
+                # cv.imshow('test', img_resized)
 
             if cv.waitKey(1) == ord('q'):
                 quit()
