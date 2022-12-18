@@ -12,7 +12,7 @@ class Vision:
     # constructor
     def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
         # load the image we're trying to match
-        # https://docs.opencv.org/4.2.0/d4/da8/group__imgcodecs.html
+
         self.needle_img = needle_img_path
 
         # scale_width = int(img.shape[1] / float_scale_w )
@@ -47,6 +47,7 @@ class Vision:
             # Add every box to the list twice in order to retain single (non-overlapping) boxes
             rectangles.append(rect)
             rectangles.append(rect)
+            
         # Apply group rectangles.
         # The groupThreshold parameter should usually be 1. If you put it at 0 then no grouping is
         # done. If you put it at 2 then an object needs at least 3 overlapping rectangles to appear
