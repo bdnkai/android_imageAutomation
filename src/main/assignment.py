@@ -7,6 +7,7 @@ from vision import Vision
 from windowcapture import WindowCapture
 
 
+
 class Device(object):
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
@@ -16,6 +17,10 @@ class Device(object):
     def __init__(self, image_file, device_names, device_sequence):
         #   properties
         self.device = None
+        self.device = device_names[device_sequence]
+        self.image_path = image_file
+        self.device_name = device_names
+        self.device_sequence = device_sequence
 
 
 
@@ -33,11 +38,13 @@ class Recognize(Device):
             if devices_length > device_number:
                 # determines new devices and points device as a new_device
                 new_device = cls.devices[device_number]
+
                 device = new_device
 
                 # assigns current device to a name within an array
+
                 new_device_name = adb_names[device_number]
-                new_device_name = f'{new_device_name}'
+
 
                 # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
@@ -90,11 +97,12 @@ class Recognize(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                tap_location = image_data.find(scale_avg, screenshot, 0.65, 'points')
-                print(tap_location)
+                tap = image_data.find(device, scale_avg, screenshot, 0.45, 'points')
 
 
-            if cv.waitKey(1) == ord('q'):
+
+
+            if cv.waitKey(0) == ord('q'):
                 quit()
                 cv.destroyAllWindows()
 
