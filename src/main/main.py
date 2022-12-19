@@ -7,8 +7,6 @@ from action import *
 
 
 
-
-
 BASE_DIR = os.path.abspath(__file__)
 IMG_DIR = os.path.abspath(__file__)
 print(BASE_DIR)
@@ -49,7 +47,8 @@ if __name__ == "__main__":
 
         for adb in range(devices_in_total):
             if adb in range(len(adb_names)):
-                Recognize(ball_img, adb_names, adb)
+                new = Recognize(ball_img, adb_names, adb)
+            
 
 
         if cv.waitKey(1) == ord('q'):

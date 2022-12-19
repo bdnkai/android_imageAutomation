@@ -97,12 +97,13 @@ class Recognize(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                tap = image_data.find(device, scale_avg, screenshot, 0.45, 'points')
+                tap_location = image_data.find(device, scale_avg, screenshot, 0.65, 'points')
 
 
 
 
-            if cv.waitKey(0) == ord('q'):
+
+            if cv.waitKey(1) == ord('q'):
                 quit()
                 cv.destroyAllWindows()
 
@@ -115,3 +116,5 @@ class Recognize(Device):
         if len(cls.devices) == 0:
             print('no device attached')
             quit()
+
+

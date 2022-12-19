@@ -10,6 +10,7 @@ class Vision:
     needle_h = 0
     method = None
 
+
     # constructor
     def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
 
@@ -41,7 +42,7 @@ class Vision:
         #print(rectangles)
 
         points = []
-        action_coordinates = []
+
         if len(rectangles):
 
 
@@ -62,16 +63,17 @@ class Vision:
                 action_x = int(scale_x + center_w)
                 action_y = int(scale_y + center_h)
 
-                if action_x and action_y > 0:
-                    dispatch('tap', device, f'{action_x} {action_y}')
-                # action_coordinates.append((action_x, action_y))
-                # print(action_coordinates)
+                # if action_x and action_y is not 0:
+                dispatch('tap', device, f'{action_x} {action_y}')
+                # action_coordinates.append(f'{action_x} {action_y}')
+
 
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
 
                 # points.append((center_x, center_y))
 
+                # print(self.action_coordinates)
 
                 if debug_mode == 'rectangles':
                     # Determine the box position
@@ -85,13 +87,13 @@ class Vision:
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=10, thickness=2)
+        # if debug_mode:
 
-            # if debug_mode:
-
-            # cv.imshow('test', haystack_img)
+            cv.imshow(f'test', haystack_img)
 
             # [points] = points
-            # cv.waitKey(0)
+            # cv.waitKey(1)
             #cv.imwrite('result_click_point.jpg', haystack_img)
-
+        # print(self.action_coordinates)
         return points
+
