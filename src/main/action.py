@@ -4,30 +4,34 @@ import concurrent.futures
 
 def dispatch(action, adb, location_x, location_y):
 
+    def adb_tap(adb,tap_x, tap_y):
+        x = adb.shell(f'input tap {tap_x} {tap_y}')
+        result = x
+        return 'pressed'
+
+
+
+
+
     with concurrent.futures.ThreadPoolExecutor() as executor:
-
-
-        def adb_tap(input):
-            return adb.shell(input)
-
-
-
 
         match action:
             case "tap":
-                future = executor.submit(dispatch,action, adb, location_x, location_y)
+                # future =executor.submit(dispatch, action=action, adb=adb, location_x=location_x, location_y=location_y)
                 # locs = location
-                print(f'{location_x} {location_y}')
+                # print(f'FROM ACTIIION::{location_x} {location_y}')
                 # quit()
 
-                results = [executor.submit(adb.shell(f'input tap{location_x} {location_y}'))]
+                future = [executor.submit(adb_tap(adb=adb, tap_x=location_x, tap_y=location_y))]
+                for f in future:
+                    results = executor.map([future])
 
-                print(future.result())
+                    print(f'FROM ACTIIION RESULTS::', results)
 
 
 
 
-                return 'results'
+                # return 'results'
 
 
             case "main":
