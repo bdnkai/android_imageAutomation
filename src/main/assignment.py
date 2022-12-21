@@ -38,11 +38,9 @@ class Recognize(Device):
             if devices_length > device_number:
                 # determines new devices and points device as a new_device
                 new_device = cls.devices[device_number]
-
                 device = new_device
 
                 # assigns current device to a name within an array
-
                 new_device_name = adb_names[device_number]
 
 

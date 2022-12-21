@@ -11,6 +11,7 @@ class Vision:
     method = None
 
 
+
     # constructor
     def __init__(self, needle_img_path, method=cv.TM_CCOEFF_NORMED):
 
@@ -39,13 +40,10 @@ class Vision:
             rectangles.append(rect)
 
         rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=2, eps=0.5)
-        #print(rectangles)
 
         points = []
-
+        action_coordinates = []
         if len(rectangles):
-
-
             line_color = (0, 255, 0)
             line_type = cv.LINE_4
             marker_color = (255, 0, 255)
@@ -63,16 +61,17 @@ class Vision:
                 action_x = int(scale_x + center_w)
                 action_y = int(scale_y + center_h)
 
-                # if action_x and action_y is not 0:
-                dispatch('tap', device, f'{action_x} {action_y}')
-                # action_coordinates.append(f'{action_x} {action_y}')
+                # dispatch('tap', device, f'{action_x} {action_y}')
+                action_coordinates.append((action_x,action_y))
+                print(f'FROM VIISSSSION====:   {action_coordinates}')
+
+                dispatch('tap', adb=device, location_x= action_coordinates[0], location_y= action_coordinates[0][1])
 
 
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
 
                 # points.append((center_x, center_y))
-
                 # print(self.action_coordinates)
 
                 if debug_mode == 'rectangles':
@@ -81,13 +80,13 @@ class Vision:
                     bottom_right = (x + w, y + h)
                     # Draw the box
                     cv.rectangle(haystack_img, top_left, bottom_right, color=line_color,
-                                lineType=line_type, thickness=2)
+                                lineType=line_type, thickness=20)
                 elif debug_mode == 'points':
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
-                                markerSize=10, thickness=2)
-        # if debug_mode:
+                                markerSize=20, thickness=2)
+        if debug_mode:
 
             cv.imshow(f'test', haystack_img)
 
@@ -95,5 +94,5 @@ class Vision:
             # cv.waitKey(1)
             #cv.imwrite('result_click_point.jpg', haystack_img)
         # print(self.action_coordinates)
-        return points
+        return action_coordinates
 
