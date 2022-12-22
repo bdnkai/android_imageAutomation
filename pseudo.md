@@ -2,10 +2,17 @@
 // mq_position = 947 , 237
 // skip_position = 1120, 53
 
-2DO:
-    Get official tap position vs pointer location
+Progression:
+    -- Include Case and Switch to handle actions.
+            - make module for Action
+            - make module for image path
+
+    -- Include concurrent.future -> in main & action module
 
 
+
+
+    --Get official tap position vs pointer location
 
             prev_sqpx = aW x aH (type int) <-- the dimension of the window size at time the image was taken
             curr_sqpx = bW x bH (type int) <-- new dimension

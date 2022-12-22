@@ -7,15 +7,20 @@ from vision import Vision
 from windowcapture import WindowCapture
 
 
+
 class Device(object):
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
 
     # devices[0].shell('input tap 443 168')
 
-    def __init__(self, image_file, device_names, device_nums):
+    def __init__(self, image_file, device_names, device_sequence):
         #   properties
         self.device = None
+        self.device = device_names[device_sequence]
+        self.image_path = image_file
+        self.device_name = device_names
+        self.device_sequence = device_sequence
 
 
 
@@ -37,7 +42,7 @@ class Recognize(Device):
 
                 # assigns current device to a name within an array
                 new_device_name = adb_names[device_number]
-                new_device_name = f'{new_device_name}'
+
 
                 # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
@@ -68,8 +73,6 @@ class Recognize(Device):
                 print(scale_avg)
 
 
-
-
                 # determines the dimensions of the img_file
                 img_w = int(img.shape[1])
                 img_h = int(img.shape[0])
@@ -92,14 +95,11 @@ class Recognize(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                tap_location = image_data.find(scale_avg, screenshot, 0.85, 'rectangles')
-                if tap_location is not None:
+                tap_location = image_data.find(device, scale_avg, screenshot, 0.65, 'points')
 
-                    tap_location_x = int(tap_location[0] / scale_avg)
-                    tap_location_y = int(tap_location[1] / scale_avg)
 
-                    print(f'{tap_location_x} {tap_location_y}')
-                    device.shell(f'input tap {tap_location_x} {tap_location_y}')
+
+
 
             if cv.waitKey(1) == ord('q'):
                 quit()
@@ -114,3 +114,5 @@ class Recognize(Device):
         if len(cls.devices) == 0:
             print('no device attached')
             quit()
+
+
