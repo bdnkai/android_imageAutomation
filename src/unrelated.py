@@ -1,3 +1,7 @@
+import time
+import concurrent.futures
+
+
 def do_something(seconds):
     print(f'Sleeping {seconds} second(s)...')
     time.sleep(seconds)
@@ -15,10 +19,10 @@ if __name__ == '__main__':
     with concurrent.futures.ProcessPoolExecutor() as executor:
             secs = [5, 4, 3, 2, 1]
 
-            # as_completed - in order it is completed
-            future = [executor.submit(do_something, sec) for sec in secs]
-            for f in concurrent.futures.as_completed(future):
-                print(f.result())
+            # # as_completed - in order it is completed
+            # future = [executor.submit(do_something, sec) for sec in secs]
+            # for f in concurrent.futures.as_completed(future):
+            #     print(f.result())
 
 
 

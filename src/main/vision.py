@@ -91,7 +91,7 @@ class Vision:
         # if debug_mode:
 
         cv.imshow(f'test', haystack_img)
-
+        cv.waitKey(delay=1000)
 
 
             # [points] = points

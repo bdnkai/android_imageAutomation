@@ -100,7 +100,7 @@ class Recognize(Device):
                 def this_device():
                     x = device
                     y = device_name
-                    z = tap_location
+                    z = final_img_sqpx
 
                     wow = f'{x}, {y}, {z}'
                     return x,y,z
