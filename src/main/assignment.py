@@ -42,7 +42,7 @@ class Recognize(Device):
 
                 # assigns current device to a name within an array
                 new_device_name = adb_names[device_number]
-
+                device_name = new_device_name
 
                 # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
@@ -97,10 +97,16 @@ class Recognize(Device):
                 # returns the (x, y) location at which the image is found
                 tap_location = image_data.find(device, scale_avg, screenshot, 0.65, 'points')
 
+                def this_device():
+                    x = device
+                    y = device_name
+                    z = tap_location
 
+                    wow = f'{x}, {y}, {z}'
+                    return x,y,z
+                print(this_device())
 
-
-
+            #
             if cv.waitKey(1) == ord('q'):
                 quit()
                 cv.destroyAllWindows()
