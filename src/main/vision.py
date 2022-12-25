@@ -89,9 +89,9 @@ class Vision:
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
         # if debug_mode:
-
         cv.imshow(f'test', haystack_img)
-        cv.waitKey(delay=1000)
+        cv.waitKey(delay=1)
+        return action_coordinates
 
 
             # [points] = points

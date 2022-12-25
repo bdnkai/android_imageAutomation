@@ -3,7 +3,7 @@ import numpy as np
 import os
 import time
 import concurrent.futures
-from assignment import Device, Recognize
+from assignment import Device, Assign
 # from action import *
 
 
@@ -33,9 +33,9 @@ devices_in_total = len(list_of_devices)
 # if __name__ == '__main__':
 BASEDIR = os.path.abspath(__file__)
 # ======  PRE CONCURRENCY MULTI PROCESSING  =========
-def run_init(adb_name, adb, sequence):
+def run_init(sequence):
 
-            Recognize(ball_img, adb_names, adb)
+    Recognize(ball_img, adb_names, sequence)
 
 
     # ======include multiprocessing here: ======
@@ -43,7 +43,7 @@ if __name__ == '__main__':
     def test():
         with concurrent.futures.ProcessPoolExecutor() as executor:
 
-            future = [executor.submit(run_init, adb_names[adb], adb)for adb in range(devices_in_total)]
+            future = [executor.submit(run_init, sequence= adb)for adb in range(devices_in_total)]
             results = executor.map(future)
 
 
@@ -56,22 +56,26 @@ if __name__ == '__main__':
 
 
 
-
+this_device  =   Assign(ball_img, adb_names, 1)
+print(this_device.tap_location)
 
     # with concurrent.futures.ProcessPoolExecutor() as executor:
-    while True:
-        test()
+    #     while True:
+    #         # test()
+    #
+    #         print(my_device)
+    #         break
         # for result in results:
         # print(results)
         # assignment()
 
-
+        #
         # f.result(future)
-
-        if cv.waitKey(1) == ord('q'):
-            quit()
-            cv.destroyAllWindows()
-            break
+        #
+        #     if cv.waitKey(1) == ord('q'):
+        #         quit()
+        #         cv.destroyAllWindows()
+        #         break
 
 
 
