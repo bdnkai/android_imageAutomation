@@ -5,6 +5,7 @@ import cv2 as cv
 import numpy as np
 from vision import Vision
 from windowcapture import WindowCapture
+from action import dispatch
 
 
 
@@ -17,7 +18,6 @@ class Device(object):
     def __init__(self, image_file, device_names, device_sequence):
         #   properties
         self.device = None
-        self.device = device_names[device_sequence]
         self.image_path = image_file
         self.device_name = device_names
         self.device_sequence = device_sequence
@@ -25,7 +25,7 @@ class Device(object):
     def this_device(self):
         x = self.device
         y = self.device_name
-        z = self.final_img_sqpx
+        z = self.device_sequence
         wow = f'{x}, {y}, {z}'
         return wow
 
@@ -33,8 +33,8 @@ class Device(object):
 
 class Assign(Device):
     pass
-    def __init__(self, vision_image_file, adb_names, device_sequence):
-        super().__init__(vision_image_file, adb_names, device_sequence)
+    def __init__(self, vision_image_file, adb_name, device_sequence):
+        super().__init__(vision_image_file, adb_name, device_sequence)
 
         if len(self.devices) >= 1:
             device_number = device_sequence
@@ -50,7 +50,7 @@ class Assign(Device):
                 self.device = new_device
 
                 # assigns current device to a name within an array
-                new_device_name = adb_names[device_number]
+                new_device_name = adb_name
                 self.device_name = new_device_name
 
                 # captures a window with our device name
@@ -105,6 +105,7 @@ class Assign(Device):
 
                 # returns the (x, y) location at which the image is found
                 self.tap_location = image_data.find(self.device, scale_avg, screenshot, 0.65, 'points')
+                dispatch('tap', self.device, f'{self.tap_location}')
 
 
 

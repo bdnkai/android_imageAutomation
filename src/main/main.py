@@ -30,21 +30,17 @@ devices_in_total = len(list_of_devices)
 
 
 
-# if __name__ == '__main__':
 BASEDIR = os.path.abspath(__file__)
-# ======  PRE CONCURRENCY MULTI PROCESSING  =========
 def run_init(sequence):
+    print(adb_names[sequence])
+    Assign(ball_img, adb_names[sequence], sequence)
 
-    Recognize(ball_img, adb_names, sequence)
 
-
-    # ======include multiprocessing here: ======
 if __name__ == '__main__':
     def test():
         with concurrent.futures.ProcessPoolExecutor() as executor:
 
             future = [executor.submit(run_init, sequence= adb)for adb in range(devices_in_total)]
-            results = executor.map(future)
 
 
             for f in concurrent.futures.as_completed(future):
@@ -56,26 +52,21 @@ if __name__ == '__main__':
 
 
 
-this_device  =   Assign(ball_img, adb_names, 1)
-print(this_device.tap_location)
+# this_device  =   Assign(ball_img, adb_names, 1)
+# print(this_device.this_device())
 
-    # with concurrent.futures.ProcessPoolExecutor() as executor:
-    #     while True:
-    #         # test()
-    #
-    #         print(my_device)
-    #         break
-        # for result in results:
-        # print(results)
-        # assignment()
+    while True:
+        test()
 
-        #
-        # f.result(future)
-        #
-        #     if cv.waitKey(1) == ord('q'):
-        #         quit()
-        #         cv.destroyAllWindows()
-        #         break
+        # break
+
+
+
+
+        if cv.waitKey(1) == ord('q'):
+            quit()
+            cv.destroyAllWindows()
+
 
 
 
