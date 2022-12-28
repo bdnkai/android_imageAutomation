@@ -8,21 +8,26 @@ from assignment import Device, Assign
 
 
 
-
-
 def img_path(img_name):
     img = f'src//img//{img_name}.png'
     return img
 
+
+
+notice_img = img_path('notice')
+exit_img = img_path('exit')
 icon_img = img_path('icon')
+enter_img = img_path('enter')
 
-ball_img = img_path('ball2')
+main_task = icon_img, exit_img, notice_img
 
+print(main_task)
 
 
 adb_names = ["badbar0","badbar1","badbar2","badbar3"]
 list_of_devices = Device.devices
 devices_in_total = len(list_of_devices)
+
 # def run_init(sequence):
 #     Recognize(ball_img, adb_names, sequence)
 
@@ -33,7 +38,8 @@ devices_in_total = len(list_of_devices)
 BASEDIR = os.path.abspath(__file__)
 def run_init(sequence):
     print(adb_names[sequence])
-    Assign(ball_img, adb_names[sequence], sequence)
+    for task in main_task:
+        Assign(task, adb_names[sequence], sequence)
 
 
 if __name__ == '__main__':
@@ -66,12 +72,5 @@ if __name__ == '__main__':
         if cv.waitKey(1) == ord('q'):
             quit()
             cv.destroyAllWindows()
-
-
-
-
-
-
-
 
 

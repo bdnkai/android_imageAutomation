@@ -41,7 +41,7 @@ class Assign(Device):
             devices_length = len(self.devices)
 
             if devices_length == device_number:
-                # print(f' No more devices to assign')
+#                 # print(f' No more devices to assign')
                 quit()
 
             if devices_length > device_number:
@@ -61,13 +61,13 @@ class Assign(Device):
                 prev_w = WindowCapture.w
                 prev_h = WindowCapture.h
                 prev_sqpx = prev_w * prev_h
-                print(prev_w, prev_h, prev_sqpx)
+                # print(prev_w, prev_h, prev_sqpx)
 
                 # determine current dimensions, and obtain it's total square pixels
                 curr_w = wincap.size_w
                 curr_h = wincap.size_h
                 curr_sqpx = curr_w * curr_h
-                print(curr_w, curr_h, curr_sqpx)
+                # print(curr_w, curr_h, curr_sqpx)
 
                 # converts img_file to a readable cv2 format
                 image_path = vision_image_file
@@ -79,21 +79,21 @@ class Assign(Device):
 
                 # obtains the average scale value
                 scale_avg = float(scale_w + scale_h) / 2
-                print(scale_avg)
+                # print(scale_avg)
 
 
                 # determines the dimensions of the img_file
                 img_w = int(img.shape[1])
                 img_h = int(img.shape[0])
                 img_sqpx = img_w * img_h
-                print(img_w, img_h, img_sqpx)
+                # print(img_w, img_h, img_sqpx)
 
                 # determines the adjusted dimensions of our img_file to adapt changes in curr_sqpx
                 final_img_sqpx = int(scale_avg * img_sqpx)
                 final_img_w = int(final_img_sqpx / img_h)
                 final_img_h = int(final_img_sqpx / img_w)
 
-                print(final_img_w, final_img_h, final_img_sqpx)
+                # print(final_img_w, final_img_h, final_img_sqpx)
 
                 # finalizes new dimensions of our img_file for opencv
                 dim = (final_img_h, final_img_w)
@@ -109,7 +109,8 @@ class Assign(Device):
 
 
 
-            #
+
+
             if cv.waitKey(1) == ord('q'):
                 quit()
                 cv.destroyAllWindows()
@@ -121,6 +122,6 @@ class Assign(Device):
             Recognize(vision_image_file, adb_names, adjusted_device_number)
 
         if len(self.devices) == 0:
-            print('no device attached')
+            # print('no device attached')
             quit()
 

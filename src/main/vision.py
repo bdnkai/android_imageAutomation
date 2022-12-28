@@ -50,8 +50,6 @@ class Vision:
             marker_type = cv.MARKER_CROSS
 
             for (x, y, w, h) in rectangles:
-                # print(f'VISION_X: {int(x /scale_avg)}  VISION_Y: {int(y/scale_avg)}')
-                # print(f'VISION_W: {w} VISION_H: {h}')
 
                 scale_x = int(x / scale_avg)
                 scale_y = int(y / scale_avg)
@@ -65,14 +63,12 @@ class Vision:
                 action_coordinates = f'{action_x} {action_y}'
 
 
-                print(f'FROM VISSSION____{action_coordinates}')
 
 
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
 
-                # points.append((center_x, center_y))
-                # print(self.action_coordinates)
+
 
                 if debug_mode == 'rectangles':
                     # Determine the box position
