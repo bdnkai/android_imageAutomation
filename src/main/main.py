@@ -13,18 +13,54 @@ def img_path(img_name):
     return img
 
 
-
+# launch game
+icon_img = img_path('icon')
 notice_img = img_path('notice')
 exit_img = img_path('exit')
-icon_img = img_path('icon')
 enter_img = img_path('enter')
 
-main_task = icon_img, exit_img, notice_img
+# makes character
+mage_img = img_path('mage')
+create_img = img_path('create')
+confirm_img = img_path('confirm')
+model_img = img_path('model')
+confirm_app_img = img_path('confirm_app')
+enter_game_img = img_path('enter')
 
-print(main_task)
+# in-game
+skip_img = img_path('skip')
+confirm2_img = img_path('confirm2')
+confirm3_img = img_path('confirm3')
+ryall_img = img_path('model')
+main_quest_img = img_path('main_quest')
+dialogue_img = img_path('dialogue')
+dialogue2_img = img_path('dialogue2')
+skip2_img = img_path('skip2')
+
+main_task = [
+    icon_img,
+    notice_img,
+    exit_img,
+    exit_img,
+    enter_img,
+    mage_img,
+    create_img,
+    confirm_img,
+    model_img,
+    confirm_app_img,
+    enter_game_img,
+    skip_img,
+    confirm2_img,
+    confirm3_img,
+    main_quest_img,
+    dialogue_img,
+    dialogue2_img,
+    skip2_img
+]
 
 
-adb_names = ["badbar0","badbar1","badbar2","badbar3"]
+
+adb_names = ["badbar4","badbar5","badbar6","badbar7"]
 list_of_devices = Device.devices
 devices_in_total = len(list_of_devices)
 
@@ -38,8 +74,9 @@ devices_in_total = len(list_of_devices)
 BASEDIR = os.path.abspath(__file__)
 def run_init(sequence):
     print(adb_names[sequence])
-    for task in main_task:
-        Assign(task, adb_names[sequence], sequence)
+    process = ''
+    for i in main_task:
+        Assign(i, adb_names[sequence], sequence)
 
 
 if __name__ == '__main__':

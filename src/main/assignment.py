@@ -104,7 +104,7 @@ class Assign(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                self.tap_location = image_data.find(self.device, scale_avg, screenshot, 0.65, 'points')
+                self.tap_location = image_data.find(self.device, scale_avg, screenshot, 0.7, 'points')
                 dispatch('tap', self.device, f'{self.tap_location}')
 
 
