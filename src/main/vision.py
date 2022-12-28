@@ -1,6 +1,6 @@
 import cv2 as cv
 import numpy as np
-from action import dispatch
+# from action import dispatch
 
 class Vision:
 
@@ -58,16 +58,14 @@ class Vision:
                 center_w = int(h/2)
                 center_h = int(w/2)
 
-                action_x = int(round(scale_x + center_w))
-                action_y = int(round(scale_y + center_h))
+                action_x = int(scale_x + center_w + 20)
+                action_y = int(scale_y + center_h + 5)
 
-                # dispatch('tap', device, f'{action_x} {action_y}')
-                # action_coordinates.append((action_x,action_y))
-                # print(f'FROM VIISSSSION====:   {action_coordinates}')
-                action_coordinates = action_x,action_y
+
+                action_coordinates = f'{action_x} {action_y}'
+
+
                 print(f'FROM VISSSION____{action_coordinates}')
-
-                dispatch('tap', adb=device, location_x=action_x, location_y=action_y)
 
 
                 center_x = x + int(w/2)
@@ -88,13 +86,8 @@ class Vision:
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
-        return points
-        # if debug_mode:
+            return action_coordinates
 
-            # cv.imshow(f'test', haystack_img)
 
-            # [points] = points
-            # cv.waitKey(1)
-            #cv.imwrite('result_click_point.jpg', haystack_img)
-        # print(self.action_coordinates)
+
 

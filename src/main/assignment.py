@@ -5,6 +5,7 @@ import cv2 as cv
 import numpy as np
 from vision import Vision
 from windowcapture import WindowCapture
+from action import dispatch
 
 
 
@@ -17,19 +18,27 @@ class Device(object):
     def __init__(self, image_file, device_names, device_sequence):
         #   properties
         self.device = None
-        self.device = device_names[device_sequence]
         self.image_path = image_file
         self.device_name = device_names
         self.device_sequence = device_sequence
 
+    def this_device(self):
+        x = self.device
+        y = self.device_name
+        z = self.device_sequence
+        wow = f'{x}, {y}, {z}'
+        return wow
 
 
-class Recognize(Device):
-    def __new__(cls, vision_image_file, adb_names, device_sequence):
 
-        if len(cls.devices) >= 1:
+class Assign(Device):
+    pass
+    def __init__(self, vision_image_file, adb_name, device_sequence):
+        super().__init__(vision_image_file, adb_name, device_sequence)
+
+        if len(self.devices) >= 1:
             device_number = device_sequence
-            devices_length = len(cls.devices)
+            devices_length = len(self.devices)
 
             if devices_length == device_number:
                 # print(f' No more devices to assign')
@@ -37,12 +46,12 @@ class Recognize(Device):
 
             if devices_length > device_number:
                 # determines new devices and points device as a new_device
-                new_device = cls.devices[device_number]
-                device = new_device
+                new_device = self.devices[device_number]
+                self.device = new_device
 
                 # assigns current device to a name within an array
-                new_device_name = adb_names[device_number]
-
+                new_device_name = adb_name
+                self.device_name = new_device_name
 
                 # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
@@ -95,12 +104,12 @@ class Recognize(Device):
                 image_data = adjusted_vision_image
 
                 # returns the (x, y) location at which the image is found
-                tap_location = image_data.find(device, scale_avg, screenshot, 0.65, 'points')
+                self.tap_location = image_data.find(self.device, scale_avg, screenshot, 0.65, 'points')
+                dispatch('tap', self.device, f'{self.tap_location}')
 
 
 
-
-
+            #
             if cv.waitKey(1) == ord('q'):
                 quit()
                 cv.destroyAllWindows()
@@ -111,8 +120,7 @@ class Recognize(Device):
             adjusted_device_number = device_sequence + 1
             Recognize(vision_image_file, adb_names, adjusted_device_number)
 
-        if len(cls.devices) == 0:
+        if len(self.devices) == 0:
             print('no device attached')
             quit()
-
 
