@@ -21,13 +21,16 @@ class Device(object):
         self.image_path = image_file
         self.device_name = device_names
         self.device_sequence = device_sequence
+        self.screenshot = None
+        self.tap_location = None
 
-    def this_device(self):
-        x = self.device
-        y = self.device_name
-        z = self.device_sequence
-        wow = f'{x}, {y}, {z}'
-        return wow
+
+
+
+    def tap(self, adb, location):
+        adb.shell(f'input tap {location}')
+        return 'done'
+
 
 
 
@@ -40,7 +43,7 @@ class Assign(Device):
             device_number = device_sequence
             devices_length = len(self.devices)
 
-            if devices_length == device_number:
+            if int(devices_length) == int(device_number):
 #                 # print(f' No more devices to assign')
                 quit()
 
@@ -55,7 +58,7 @@ class Assign(Device):
 
                 # captures a window with our device name
                 wincap = WindowCapture(new_device_name)
-                screenshot = wincap.get_screenshot()
+                self.screenshot = wincap.get_screenshot()
 
                 # determine previous dimensions, and obtain it's total square pixels
                 prev_w = WindowCapture.w
@@ -73,7 +76,7 @@ class Assign(Device):
                 image_path = vision_image_file
                 img = cv.imread(image_path)
 
-                # determine scale value for both height and width
+                    # determine scale value for both height and width
                 scale_w = float(curr_w / prev_w)
                 scale_h = float(curr_h / prev_h)
 
@@ -99,27 +102,28 @@ class Assign(Device):
                 dim = (final_img_h, final_img_w)
                 img_resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
 
-                # sends adjusted img dimension to Vision Module
+            # sends adjusted img dimension to Vision Module
                 adjusted_vision_image = Vision(img_resized)
                 image_data = adjusted_vision_image
 
-                # returns the (x, y) location at which the image is found
-                self.tap_location = image_data.find(self.device, scale_avg, screenshot, 0.7, 'points')
-                dispatch('tap', self.device, f'{self.tap_location}')
+            # returns the (x, y) location at which the image is found
+                self.tap_location = image_data.find(self.device, scale_avg, self.screenshot, 0.50, 'rectangles')
+
+                if self.tap_location is not None:
+                    self.tap(self.device, self.tap_location)
+
+
+                # print(self.tap_location)
 
 
 
-
-
-            if cv.waitKey(1) == ord('q'):
-                quit()
-                cv.destroyAllWindows()
 
 
 
         else:
             adjusted_device_number = device_sequence + 1
-            Recognize(vision_image_file, adb_names, adjusted_device_number)
+            Assign(vision_image_file, adb_names, adjusted_device_number)
+
 
         if len(self.devices) == 0:
             # print('no device attached')

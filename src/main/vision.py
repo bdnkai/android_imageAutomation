@@ -56,8 +56,10 @@ class Vision:
                 center_w = int(h/2)
                 center_h = int(w/2)
 
-                action_x = int(scale_x + center_w + 20)
-                action_y = int(scale_y + center_h + 5)
+                action_x = int(scale_x + center_w + 24) #475
+                action_y = int(scale_y + center_h + 2) #190
+
+                print((action_x, action_y))
 
 
                 action_coordinates = f'{action_x} {action_y}'
@@ -76,13 +78,15 @@ class Vision:
                     bottom_right = (x + w, y + h)
                     # Draw the box
                     cv.rectangle(haystack_img, top_left, bottom_right, color=line_color,
-                                lineType=line_type, thickness=20)
+                                lineType=line_type, thickness=5)
                 elif debug_mode == 'points':
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
             return action_coordinates
+
+
 
 
 
