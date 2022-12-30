@@ -5,8 +5,8 @@ import win32gui, win32ui, win32con
 class WindowCapture:
 
     # properties
-    w = 1280
-    h = 720
+    w = 1282
+    h = 724
     hwnd = None
     cropped_x = 0
     cropped_y = 0

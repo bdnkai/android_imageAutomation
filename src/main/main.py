@@ -4,6 +4,7 @@ import os
 import time
 import concurrent.futures
 from assignment import Device, Assign
+
 # from action import *
 
 
@@ -22,10 +23,10 @@ enter_img = img_path('enter')
 # makes character
 mage_img = img_path('mage')
 create_img = img_path('create')
-confirm_img = img_path('confirm')
+confirm_img = img_path('con')
 model_img = img_path('model')
 confirm_app_img = img_path('confirm_app')
-enter_game_img = img_path('enter')
+eg_img = img_path('eg')
 
 # in-game
 skip_img = img_path('skip')
@@ -39,22 +40,17 @@ skip2_img = img_path('skip2')
 
 main_task = [
     icon_img,
-    notice_img,
     exit_img,
-    enter_img,
-    mage_img,
+    eg_img,
     create_img,
+    mage_img,
     confirm_img,
+    confirm3_img,
     model_img,
     confirm_app_img,
-    enter_game_img,
     skip_img,
-    confirm2_img,
-    confirm3_img,
-    main_quest_img,
     dialogue_img,
-    dialogue2_img,
-    skip2_img
+    main_quest_img,
 ]
 
 
@@ -80,13 +76,15 @@ if __name__ == '__main__':
 
 
             results = [executor.submit(Assign,vision_image_file=img ,adb_name= adb_names[adb], device_sequence= adb)for adb in range(devices_in_total)]
-            [future] = results
 
             for f in concurrent.futures.as_completed(results):
                 this = f.result()
                 print(f'{f.result()}')
-                cv.waitKey(10)
-                cv.imshow('test', this.screenshot)
+                wow = cv.cvtColor(this.screenshot, cv.COLOR_BGR2GRAY)
+                cv.waitKey(100)
+                cv.imshow('test', wow)
+
+
 
 
 
@@ -104,7 +102,7 @@ if __name__ == '__main__':
 
 
 
-        if cv.waitKey(1) == ord('q'):
+        if cv.waitKey(100) == ord('q'):
             quit()
             cv.destroyAllWindows()
 

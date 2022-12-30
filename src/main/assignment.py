@@ -18,12 +18,11 @@ class Device(object):
     def __init__(self, image_file, device_names, device_sequence):
         #   properties
         self.device = None
-        self.image_path = image_file
+        self.adjusted_vision_image = None
         self.device_name = device_names
         self.device_sequence = device_sequence
         self.screenshot = None
         self.tap_location = None
-
 
 
 
@@ -61,16 +60,16 @@ class Assign(Device):
                 self.screenshot = wincap.get_screenshot()
 
                 # determine previous dimensions, and obtain it's total square pixels
-                prev_w = WindowCapture.w
-                prev_h = WindowCapture.h
+                prev_w = 1280
+                prev_h = 720
                 prev_sqpx = prev_w * prev_h
                 # print(prev_w, prev_h, prev_sqpx)
 
                 # determine current dimensions, and obtain it's total square pixels
-                curr_w = wincap.size_w
+                curr_w = wincap.size_w - 54
                 curr_h = wincap.size_h
                 curr_sqpx = curr_w * curr_h
-                # print(curr_w, curr_h, curr_sqpx)
+                print(curr_w, curr_h, curr_sqpx)
 
                 # converts img_file to a readable cv2 format
                 image_path = vision_image_file
@@ -100,16 +99,16 @@ class Assign(Device):
 
                 # finalizes new dimensions of our img_file for opencv
                 dim = (final_img_h, final_img_w)
-                img_resized = cv.resize(img, dim, interpolation=cv.INTER_AREA)
+                img_resized = cv.resize(img, dim)
 
             # sends adjusted img dimension to Vision Module
-                adjusted_vision_image = Vision(img_resized)
-                image_data = adjusted_vision_image
+                self.adjusted_vision_image = Vision(img_resized)
+                image_data = self.adjusted_vision_image
 
             # returns the (x, y) location at which the image is found
-                self.tap_location = image_data.find(self.device, scale_avg, self.screenshot, 0.50, 'rectangles')
+                self.tap_location = image_data.find(self.device, scale_avg, self.screenshot, 0.75, 'points')
 
-                if self.tap_location is not None:
+            if self.tap_location is not None:
                     self.tap(self.device, self.tap_location)
 
 
