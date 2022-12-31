@@ -24,7 +24,7 @@ class Vision:
 
     def find(self,device, scale_avg, haystack_img, threshold=0.74, debug_mode=None):
 
-
+        self.haystack_img = cv.Cvt(haystack_img, cv_RGB2GRAY)
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
 
         locations = np.where(result >= threshold)
