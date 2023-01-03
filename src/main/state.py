@@ -1,3 +1,0 @@
-
-
-def dispatch_variables():

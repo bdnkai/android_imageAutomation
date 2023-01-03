@@ -1,7 +1,4 @@
 
-
-
-
 def dispatch(action, adb, location):
 
         match action:

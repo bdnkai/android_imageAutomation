@@ -3,7 +3,6 @@ import numpy as np
 # from action import dispatch
 
 class Vision:
-
     # properties
     needle_img = None
     needle_w = 0
@@ -23,9 +22,9 @@ class Vision:
         self.method = method
 
 
-    def find(self,device, scale_avg, haystack_img, threshold=0.5, debug_mode=None):
+    def find(self,device, scale_avg, haystack_img, threshold=0.74, debug_mode=None):
 
-
+        self.haystack_img = cv.Cvt(haystack_img, cv_RGB2GRAY)
         result = cv.matchTemplate(haystack_img, self.needle_img, self.method)
 
         locations = np.where(result >= threshold)
@@ -39,7 +38,7 @@ class Vision:
             rectangles.append(rect)
             rectangles.append(rect)
 
-        rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=2, eps=0.5)
+        rectangles, weights = cv.groupRectangles(rectangles, groupThreshold=1, eps=0.5)
 
         points = []
         action_coordinates = []
@@ -50,29 +49,27 @@ class Vision:
             marker_type = cv.MARKER_CROSS
 
             for (x, y, w, h) in rectangles:
-                # print(f'VISION_X: {int(x /scale_avg)}  VISION_Y: {int(y/scale_avg)}')
-                # print(f'VISION_W: {w} VISION_H: {h}')
 
                 scale_x = int(x / scale_avg)
                 scale_y = int(y / scale_avg)
                 center_w = int(h/2)
                 center_h = int(w/2)
 
-                action_x = int(scale_x + center_w + 20)
-                action_y = int(scale_y + center_h + 5)
+                action_x = int(scale_x + center_w - 10) #475
+                action_y = int(scale_y + center_h + 2) #190
+
+                print((action_x, action_y))
 
 
                 action_coordinates = f'{action_x} {action_y}'
 
 
-                print(f'FROM VISSSION____{action_coordinates}')
 
 
                 center_x = x + int(w/2)
                 center_y = y + int(h/2)
 
                 # points.append((center_x, center_y))
-                # print(self.action_coordinates)
 
                 if debug_mode == 'rectangles':
                     # Determine the box position
@@ -80,13 +77,17 @@ class Vision:
                     bottom_right = (x + w, y + h)
                     # Draw the box
                     cv.rectangle(haystack_img, top_left, bottom_right, color=line_color,
-                                lineType=line_type, thickness=20)
+                                lineType=line_type, thickness=5)
                 elif debug_mode == 'points':
+                    cv.imshow('imageee', self.needle_img)
+                    cv.waitKey(100)
                     # Draw the center point
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
-            return action_coordinates
+                return action_coordinates
+
+
 
 
 

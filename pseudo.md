@@ -3,6 +3,10 @@
 // skip_position = 1120, 53
 
 Progression:
+    -- check, images one by one, to prevents errors
+    -- make processes in sequences, not all at a time
+
+
     -- Include Case and Switch to handle actions.
             - make module for Action
             - make module for image path
