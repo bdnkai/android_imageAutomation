@@ -5,7 +5,7 @@ import cv2 as cv
 import numpy as np
 from vision import Vision
 from windowcapture import WindowCapture
-from action import dispatch
+
 
 
 
@@ -15,7 +15,7 @@ class Device(object):
 
     # devices[0].shell('input tap 443 168')
 
-    def __init__(self, image_file, device_names, device_sequence):
+    def __init__(self, image_file, device_names, device_sequence,threshold):
         #   properties
         self.device = None
         self.adjusted_vision_image = None
@@ -35,8 +35,8 @@ class Device(object):
 
 class Assign(Device):
     pass
-    def __init__(self, vision_image_file, adb_name, device_sequence):
-        super().__init__(vision_image_file, adb_name, device_sequence)
+    def __init__(self, vision_image_file, adb_name, device_sequence, threshold):
+        super().__init__(vision_image_file, adb_name, device_sequence, threshold)
 
         if len(self.devices) >= 1:
             device_number = device_sequence
@@ -106,7 +106,7 @@ class Assign(Device):
                 image_data = self.adjusted_vision_image
 
             # returns the (x, y) location at which the image is found
-                self.tap_location = image_data.find(self.device, scale_avg, self.screenshot, 0.75, 'points')
+                self.tap_location = image_data.find(self.device, scale_avg, self.screenshot, threshold, 'points')
 
             if self.tap_location is not None:
                     self.tap(self.device, self.tap_location)

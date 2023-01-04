@@ -3,7 +3,8 @@ import numpy as np
 import os
 import time
 import concurrent.futures
-from assignment import Device, Assign
+
+from action import dispatch
 
 # from action import *
 
@@ -38,57 +39,13 @@ dialogue_img = img_path('dialogue')
 dialogue2_img = img_path('dialogue2')
 skip2_img = img_path('skip2')
 
-main_task = [
-    icon_img,
-    exit_img,
-    eg_img,
-    create_img,
-    mage_img,
-    confirm_img,
-    confirm3_img,
-    model_img,
-    confirm_app_img,
-    skip_img,
-    dialogue_img,
-    main_quest_img,
-]
-
-
-
-adb_names = ["badbar4","badbar5","badbar6","badbar7"]
-list_of_devices = Device.devices
-devices_in_total = len(list_of_devices)
 
 
 
 
-# def run_init(path, sequence):
-#     print(adb_names[sequence])
-#     device = Assign(path, adb_names[sequence], sequence)
-#     device_name = device.device_name
-#     screenshot = device.screenshot
 
 
 if __name__ == '__main__':
-    def test(img):
-
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-
-
-            results = [executor.submit(Assign,vision_image_file=img ,adb_name= adb_names[adb], device_sequence= adb)for adb in range(devices_in_total)]
-
-            for f in concurrent.futures.as_completed(results):
-                this = f.result()
-                print(f'{f.result()}')
-                wow = cv.cvtColor(this.screenshot, cv.COLOR_BGR2GRAY)
-                cv.waitKey(100)
-                cv.imshow('test', wow)
-
-
-
-
-
-
 
 
 
@@ -96,9 +53,21 @@ if __name__ == '__main__':
 # print(this_device.this_device())
 
     while True:
+        dispatch("assign", icon_img, 0.7)
+        dispatch("assign", exit_img, 0.7)
+        dispatch("assign", eg_img, 0.7)
+        dispatch("assign", create_img, 0.6)
+        dispatch("assign", mage_img, 0.7)
+        dispatch("assign", confirm_app_img, 0.86)
+        dispatch('assign', confirm_img, 0.65)
+        dispatch('assign', model_img, 0.65)
+        dispatch('assign', confirm2_img, 0.65)
+        dispatch('assign', skip_img, 0.65)
+
+
         # test()
         # break
-        run = [test(img)for img in main_task]
+
 
 
 
