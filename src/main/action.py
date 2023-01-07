@@ -15,16 +15,15 @@ def dispatch(action, img, threshold):
         match action:
             case "assign":
                 with concurrent.futures.ThreadPoolExecutor() as executor:
-
-
                     results = [executor.submit(Assign,vision_image_file=img ,adb_name= adb_names[adb], device_sequence= adb, threshold= threshold)for adb in range(devices_in_total)]
 
                 for f in concurrent.futures.as_completed(results):
                     this = f.result()
                     print(f'{f.result()}')
-                    # wow = cv.cvtColor(this.screenshot, cv.COLOR_BGR2GRAY)
+                    this.tap(this.device, f'{950} {162}')
+                    # cv.imshow("test", this.screenshot)
                     # cv.waitKey(100)
-                    # cv.imshow('test', wow)
+
 
             case "main":
                 return "one"

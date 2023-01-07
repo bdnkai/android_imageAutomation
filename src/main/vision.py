@@ -84,7 +84,7 @@ class Vision:
                     cv.drawMarker(haystack_img, (center_x, center_y),
                                 color=marker_color, markerType=marker_type,
                                 markerSize=20, thickness=2)
-                return action_coordinates
+            return action_coordinates
 
 
 

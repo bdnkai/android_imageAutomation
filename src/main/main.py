@@ -53,16 +53,18 @@ if __name__ == '__main__':
 # print(this_device.this_device())
 
     while True:
-        dispatch("assign", icon_img, 0.7)
-        dispatch("assign", exit_img, 0.7)
-        dispatch("assign", eg_img, 0.7)
-        dispatch("assign", create_img, 0.6)
-        dispatch("assign", mage_img, 0.7)
+        tap_icon = dispatch("assign", icon_img, 0.79)
+        if tap_icon:
+            tap_icon()
+        dispatch("assign", exit_img, 0.85)
+        dispatch("assign", eg_img, 0.85)
+        dispatch("assign", create_img, 0.85)
+        dispatch("assign", mage_img, 0.85)
         dispatch("assign", confirm_app_img, 0.86)
-        dispatch('assign', confirm_img, 0.65)
-        dispatch('assign', model_img, 0.65)
-        dispatch('assign', confirm2_img, 0.65)
-        dispatch('assign', skip_img, 0.65)
+        dispatch('assign', confirm_img, 0.85)
+        dispatch('assign', model_img, 0.85)
+        dispatch('assign', confirm2_img, 0.85)
+        dispatch('assign', skip_img, 0.85)
 
 
         # test()
@@ -71,8 +73,8 @@ if __name__ == '__main__':
 
 
 
-        if cv.waitKey(100) == ord('q'):
-            quit()
-            cv.destroyAllWindows()
+        # if cv.waitKey(100) == ord('q'):
+        #     quit()
+        #     cv.destroyAllWindows()
 
 

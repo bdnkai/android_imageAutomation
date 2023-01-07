@@ -12,7 +12,6 @@ from windowcapture import WindowCapture
 class Device(object):
     adb = AdbClient(host='127.0.0.1', port=5037)
     devices = adb.devices()
-
     # devices[0].shell('input tap 443 168')
 
     def __init__(self, image_file, device_names, device_sequence,threshold):
@@ -35,6 +34,7 @@ class Device(object):
 
 class Assign(Device):
     pass
+
     def __init__(self, vision_image_file, adb_name, device_sequence, threshold):
         super().__init__(vision_image_file, adb_name, device_sequence, threshold)
 
@@ -43,7 +43,7 @@ class Assign(Device):
             devices_length = len(self.devices)
 
             if int(devices_length) == int(device_number):
-#                 # print(f' No more devices to assign')
+                # print(f' No more devices to assign')
                 quit()
 
             if devices_length > device_number:
@@ -66,7 +66,7 @@ class Assign(Device):
                 # print(prev_w, prev_h, prev_sqpx)
 
                 # determine current dimensions, and obtain it's total square pixels
-                curr_w = wincap.size_w - 54
+                curr_w = wincap.size_w
                 curr_h = wincap.size_h
                 curr_sqpx = curr_w * curr_h
                 print(curr_w, curr_h, curr_sqpx)
@@ -75,14 +75,13 @@ class Assign(Device):
                 image_path = vision_image_file
                 img = cv.imread(image_path)
 
-                    # determine scale value for both height and width
+                # determine scale value for both height and width
                 scale_w = float(curr_w / prev_w)
                 scale_h = float(curr_h / prev_h)
 
                 # obtains the average scale value
                 scale_avg = float(scale_w + scale_h) / 2
                 # print(scale_avg)
-
 
                 # determines the dimensions of the img_file
                 img_w = int(img.shape[1])
@@ -111,20 +110,14 @@ class Assign(Device):
             if self.tap_location is not None:
                     self.tap(self.device, self.tap_location)
 
-
-                # print(self.tap_location)
-
-
-
-
-
+            # print(self.tap_location)
 
         else:
             adjusted_device_number = device_sequence + 1
-            Assign(vision_image_file, adb_names, adjusted_device_number)
+            self.__init__(vision_image_file, adb_name, adjusted_device_number, threshold)
 
 
         if len(self.devices) == 0:
-            # print('no device attached')
-            quit()
+            print('no device attached')
+            # quit()
 
