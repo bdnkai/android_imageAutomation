@@ -40,14 +40,7 @@ dialogue2_img = img_path('dialogue2')
 skip2_img = img_path('skip2')
 
 
-
-
-
-
-
 if __name__ == '__main__':
-
-
 
 # this_device  =   Assign(ball_img, adb_names, 1)
 # print(this_device.this_device())

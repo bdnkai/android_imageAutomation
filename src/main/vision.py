@@ -77,6 +77,8 @@ class Vision:
                     # Draw the box
                     cv.rectangle(haystack_img, top_left, bottom_right, color=line_color,
                                 lineType=line_type, thickness=5)
+                    cv.imshow('imageee', self.needle_img)
+                    cv.waitKey(100)
                 elif debug_mode == 'points':
                     cv.imshow('imageee', self.needle_img)
                     cv.waitKey(100)

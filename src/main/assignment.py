@@ -116,7 +116,6 @@ class Assign(Device):
             adjusted_device_number = device_sequence + 1
             self.__init__(vision_image_file, adb_name, adjusted_device_number, threshold)
 
-
         if len(self.devices) == 0:
             print('no device attached')
             # quit()

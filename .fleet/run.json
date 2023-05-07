@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "type": "python",
+            "name": "main",
+            "arguments": ["src/main/main.py"],
+        },
+        {
+            "type": "python",
+            "name": "unrelated",
+            "arguments": ["src/unrelated.py"],
+        },
+        
+    ]
+}
